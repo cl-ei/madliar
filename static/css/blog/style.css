@@ -1,0 +1,231 @@
+
+@font-face {
+    font-family: 'TeXGyreAdventorBold';
+    src: url('../font/texgyreadventor-bold-webfont.eot');
+    src: url('../font/texgyreadventor-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/texgyreadventor-bold-webfont.woff') format('woff'),
+         url('../font/texgyreadventor-bold-webfont.ttf') format('truetype'),
+         url('../font/texgyreadventor-bold-webfont.svg#TeXGyreAdventorBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'RobotoBlack';
+    src: url('../font/Roboto-Black-webfont.eot');
+    src: url('../font/Roboto-Black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Roboto-Black-webfont.woff') format('woff'),
+         url('../font/Roboto-Black-webfont.ttf') format('truetype'),
+         url('../font/Roboto-Black-webfont.svg#RobotoBlack') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+a{
+color:#9fd632;
+transition:ease-out .3s;
+-webkit-transition:ease-out .3s;
+-moz-transition:ease-out .3s;
+-o-transition:ease-out .3s;
+-ms-transition:ease-out .3s;
+}
+a:focus{
+outline:none;
+}
+a:hover{text-decoration:underline;}
+body{background:#333;font-family: 'TeXGyreAdventorBold';color:#fff;line-height:2;}
+h1, h2, h3, h4, h5, h6{font-weight:normal;}
+.center{text-align:center;}
+.inner-page{padding:40px 0;}
+.inner-content{padding:40px 0;}
+[class^="icon-"]:before, [class*=" icon-"]:before{text-decoration:none;}
+.title{margin:20px 0;}
+.motto{margin-top:60px;}
+.bottom-content{margin-bottom:80px;}
+.copyright{font-size:12px;}
+.loader{position:fixed;width:100%;left:0;top:20%;text-align:center;}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    border-radius: 0 0 0 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    max-width: 410px;
+    padding: 5px 10px 15px;
+    text-align: center;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    width: 80%;
+}
+.social-list {
+    left: 0;
+    padding-top: 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+	z-index:9;
+}
+
+.social-icon a {
+    background: none repeat scroll 0 0 #1B100C;
+    border-radius: 30px 30px 30px 30px;
+    color: #FFFFFF;
+    display: inline-block;
+    height: 20px;
+    line-height: 16px;
+    margin: 10px;
+    padding: 10px;
+    width: 20px;
+}
+.social-icon a:hover{background:#9FD632;}
+.mask {position:fixed;width:100%;height:100%;top:0;left:0;opacity:0.5;z-index:-2;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";}
+.loadcolor{background:#371306;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";opacity:0.7;}
+.homecolor{background:#0a2d3b;}
+.aboutcolor{background:#4E005B;}
+.contactcolor{background:#413D00;}
+.color{color:#9FD632;}
+.strong{font-family:'RobotoBlack';}
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
+    color:    #eee;
+	text-align:center;
+}
+input:-moz-placeholder,textarea:-moz-placeholder {
+    color:    #eee;
+	text-align:center;
+}
+input::-moz-placeholder,textarea::-moz-placeholder {
+    color:    #eee;
+	text-align:center;
+}
+input:-ms-input-placeholder,textarea:-ms-input-placeholder {
+    color:    #eee;
+	text-align:center;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus{border-color:#9FD632;box-shadow:none;}
+
+/*------------------------menu section-------------------------------------------*/
+.menu{background:#1b100c;width:100%;position:fixed;left:0;bottom:0;z-index:9999;}
+.menu-inner{width:100%;margin:auto;}
+.navi,.social-icon,.logo{display:inline-block;}
+.logo{padding:0 20px;}
+.right-menu{float:right;}
+.menu .navi,.social-icon{list-style:none;margin:0;}
+.menu .navi {display:block;border-left: 1px solid #271E1E;}
+.social-icon li{display:inline-block;}
+.menu .navi li{
+    display: block;
+    float: left;
+    margin: 0;
+	border-right: 1px solid #271E1E;
+}
+.navi li {height:85px;}
+.navi li a{height:85px;background:#251915;color:#ddd;display:block;padding:0 20px;line-height:79px;text-decoration:none;}
+.navi li a:hover,.navi li a:focus,.navi li .current{background:none repeat scroll 0 0 #9FD632;color:#fff;}
+
+/*------------------------home section-------------------------------------------*/
+.motto p{max-width:800px;margin:auto;color:#dedede;}
+.white{color:#fff;}
+.big,.big h2 {
+    font-size: 75px;
+    line-height: 80px;
+	font-family:RobotoBlack;
+	margin:0;
+}
+.big{margin-bottom:20px;}
+.big .title-three{color:#9FD632;}
+.inline-block{display:inline-block;}
+#clock ul{list-style:none;margin:0;}
+#clock ul li{padding-left:45px;position:relative;text-align:left;display:inline-block;margin:15px;font-family:'RobotoBlack';color:#9FD632;}
+#clock li p{font-size:22px;text-transform:uppercase;line-height:20px;color:#fff;}
+#clock ul li span{font-family:'TeXGyreAdventorBold';}
+#clock li i {
+    background: url("../images/hex.png") no-repeat scroll center center transparent !important;
+    color: #FFFFFF;
+    font-size: 18px;
+    height: 80px;
+    left: 0;
+    line-height: 80px;
+    position: absolute;
+    width: 40px;
+}
+.submit-btn {
+    background: none repeat scroll 0 0 #9FD632;
+    left: 50%;
+	color:#fff;
+    margin-left: -55px;
+    padding: 8px 20px;
+    position: absolute;
+    text-align: center;
+	text-transform:uppercase;
+    top: 26px;
+}
+.submit-btn:hover{background:#fff;color:#9FD632;text-decoration:none;}
+#sub-inner{position:relative;}
+#sContent{position:relative;}
+#subscribe-form label {
+    left: 0;
+    margin-top: 80px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+/*-------------------------------------------about section------------------*/
+#service ul{list-style:none;margin:0;}
+#service ul li{padding-left:45px;position:relative;text-align:left;display:inline-block;margin:15px;font-family:'RobotoBlack';color:#9FD632;}
+#service li p{font-size:22px;text-transform:uppercase;line-height:20px;color:#fff;}
+#service ul li span{font-family:'TeXGyreAdventorBold';}
+#service li i {
+    background: url("../images/hex.png") no-repeat scroll center center transparent !important;
+    color: #FFFFFF;
+    font-size: 15px;
+    height: 80px;
+    left: 0;
+    line-height: 80px;
+    position: absolute;
+    width: 40px;
+}
+/*-------------------------------------------contact section------------------*/
+#address ul{list-style:none;margin:0;}
+#address ul li{padding-left:45px;position:relative;text-align:left;display:inline-block;margin:15px;font-family:'RobotoBlack';color:#9FD632;}
+#address li p{font-size:22px;text-transform:uppercase;line-height:20px;color:#fff;}
+#address ul li span{font-family:'TeXGyreAdventorBold';}
+#address li i {
+    background: url("../images/hex.png") no-repeat scroll center center transparent !important;
+    color: #FFFFFF;
+    font-size: 15px;
+    height: 80px;
+    left: 0;
+    line-height: 80px;
+    position: absolute;
+    width: 40px;
+}
+#address #rrt ul li{padding-left:0;position:relative;text-align:center;display:inline-block;margin:0;font-family:'RobotoBlack';color:#fff;}
+.rrt-author-img{margin-right:10px;}
+/*-----------------------------media queries-----------------------------------*/
+@media (max-width: 767px) {
+		.menu,#home{
+	    margin-left: -20px;
+		margin-right: -20px;
+		padding-left: 20px;
+		padding-right: 20px;
+		}
+		.big, .big h2 {
+		font-size: 60px;
+		line-height: 70px;
+		}
+
+}
+@media (max-width:480px){
+	.copyright{margin-bottom:10px;}
+	.big, .big h2 {
+    font-size: 50px;
+    line-height: 60px;
+	}
+	.logo{padding:0 10px;}
+	.navi li a{padding:0 15px;}
+}
+@media (max-width:400px){
+	.logo{width:20%;margin-top:20px;}
+	.navi li a {
+		padding: 0 11px;
+	}
+	}

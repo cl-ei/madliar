@@ -1,5 +1,5 @@
-from .blog.urls import url as blog_url_map
-from .blog.views import home_page
+from application.blog.urls import url as blog_url_map
+from application.blog.views import home_page
 
 url = {
     "^/$": home_page,
