@@ -3,8 +3,10 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>镜尚传媒 - Responsive Coming Soon Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MadLiar</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="360" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="{{ page.get('description') }}">
     <meta name="author" content="{{ page.get('description') }}">
 
@@ -19,59 +21,155 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+    <style>
+    </style>
 </head>
 
 <body>
-    <div class="social-list center clearfix">
-        <ul class="social-icon">
-            <li><a href="#"><i class="icon-facebook"></i></a></li>
-            <li><a href="#"><i class="icon-twitter"></i></a></li>
-            <li><a href="#"><i class="icon-google-plus"></i></a></li>
-            <li><a href="#"><i class="icon-github"></i></a></li>
-        </ul>
+    <div id="page-footer" class="copyright center">
+        <p><span>© 2014-2017 MadLiar</span>&nbsp|&nbsp&nbsp<span>MadLiar freamwork powered.</span></p>
     </div>
     <div class="menu clearfix">
         <div class="menu-inner clearfix">
             <div class="clearfix logo">MADL!AR</div>
             <div class="clearfix right-menu">
                 <ul class="clearfix navi">
-                    <li><a  class="current" href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a id="home-view" class="current" href="#">首页</a></li>
+                    <li><a id="category-view" href="#">记录</a></li>
+                    <li><a id="about-view" href="#">关于</a></li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="loader clearfix container"></div>
-    <section  class="clearfix page">
+
+    <div class="motto center">
+        <div id="madliar-title" class="big"><h2 class="inner-title">MADL!AR</h2><span id="loading-points"></span></div>
+    </div>
+
+    <section class="clearfix page" style="display: none">
         <div class="mask homecolor"></div>
-        <div class="container inner-content motto center">
-            <div class="big"><h2 class="title-one">我们正在升级我们的网站.</h2></div>
+
+        <div class="social-list center clearfix">
+            <ul class="social-icon">
+                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                <li><a href="#"><i class="icon-google-plus"></i></a></li>
+                <li><a href="#"><i class="icon-github"></i></a></li>
+            </ul>
         </div>
-        <div id="clock" class="inner-content clearfix">
-              <ul class="center">
-                  <li><i class="icon-adjust"></i><span id="weeks"></span>      Weeks <p>Trial<br>and<br>error</p></li>
-                  <li><i class="icon-time"></i><span id="daysLeft"></span>   Days <p>Time<br>of<br>life</p></li>
-                  <li><i class="icon-upload"></i><span id="hours"></span>      Hours <p>Up<br>and<br>away</p></li>
-                  <li><i class="icon-question-sign"></i><span id="minutes"></span>    Minutes <p>Lot<br>of<br>Patience</p></li>
-                  <li><i class="icon-globe"></i><span id="seconds"></span>    Seconds <p>Over<br>the<br>World</p></li>
-              </ul>
+        <div id="home-sub-page" style="display: none">
+
+        </div>
+        <div id="about-sub-page" style="display: none">
+            <img class="head-background-img" src="/static/img/head-bg.jpg">
+            <div id="head-img-container">
+                <img class="head-img" src="/static/img/head.jpg">
+            </div>
+            <h4>疯人&nbsp·&nbspCL</h4>
+            <div id="about-text">
+                <h2>关于&nbsp·&nbspMADL!AR</h2>
+                <p>博主CL，编程爱好者，目前在西安高新区做服务器端的软件开发。“madlair”意为“疯子”、“谎言者”，略含贬义，但它挺适合这个博客的：博文大多只是我个人肤浅的观点，偶尔有些粗浅的学习笔记。博文质量不高，如果你有任何建议或吐槽，欢迎请给我留言或发邮件：i@caoliang.net。</p>
+                <br />
+                <h2>优秀博客推荐：</h2>
+                <ul>
+                    <li><a target="_blank" href="http://wangyu.name/">即刻出发</a></li>
+                    <li><a target="_blank" href="http://dkjiaoyang.com/">易冷天涯</a></li>
+                    <li><a target="_blank" href="http://blog.vinlic.com/">vinlic.com</a></li>
+                    <li><a target="_blank" href="https://alexlee.cn/">聪头话斋</a></li>
+                </ul>
+            </div>
         </div>
     </section>
-    <div id="page-footer" class="copyright center"><p>copytight 2017 <a href="#">镜尚传媒有限公司</a></p></div>
+    <script src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/blog/subscribe.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.shuffleLetters.js"></script>
+    <script type="text/javascript">
+        function firstBackgroundImgOnLoad(){
+            $("body").css({background: "#888"}).find("section").fadeIn(400);
+            window.backgroundImageIndex = 1;
+            var speedIntVal = 10000;
+            function flushBackGround(){
+                var currentIndex = parseInt(window.backgroundImageIndex % 4) + 1;
+                $(".mask").css(
+                    "background-image",
+                    'url("http://localhost/static/img/slider' + currentIndex + '.jpg")'
+                );
+                window.backgroundImageIndex += 1;
+                setTimeout(flushBackGround, speedIntVal);
+            }
+            setTimeout(flushBackGround, speedIntVal);
+        }
+        $(function(){
+            window.titleLoadingInterVal = 0;
+            window.titleLoadingTick = 0;
 
-    <script src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/subscribe.js"></script>
-    <script type="text/javascript" src="js/supersized.3.2.7.min.js"></script>
-    <script type="text/javascript" src="js/supersized.shutter.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.shuffleLetters.js"></script>
-    <script type="text/javascript" src="twitter/jquery.tweet.js"></script>
-    <script src="js/ticker.js" type="text/javascript"></script>
-    <script src="js/tweet.js"></script>
-    <script src="js/shuffle.js"></script>
-    <script src="js/countdown.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+            function removeSocialIcon(){
+                $(".social-icon").css({"top": "-80px"});
+                setTimeout(function(){
+                    $(".social-list").remove();
+                }, 700);
+            }
+            // setTimeout(removeSocialIcon, 2000);
+
+            function titleLoadingPrompt(){
+                $("#loading-points").html("");
+                $(".motto").css("display", "");
+                $("#madliar-title").css({"top": "0px", "opacity": 1});
+                if(window.titleLoadingInterVal == 0){
+                    setTimeout(function(){
+                        window.titleLoadingInterVal = setInterval(function(){
+                            window.titleLoadingTick += 1;
+                            $("#loading-points").html(["", ".", "..", "..."][titleLoadingTick % 4]);
+                        }, 300)
+                    }, 1500);
+                }
+            }
+            function clearTitleLoadingPrompt(){
+                clearInterval(titleLoadingInterVal);
+                window.titleLoadingInterVal = 0;
+                $("#madliar-title").css({"top": "-120px", "opacity": 0});
+                setTimeout(function(){
+                    $(".motto").fadeOut(0);
+                }, 1000);
+            }
+            $(".inner-title").shuffleLetters();
+            titleLoadingPrompt();
+
+            // setTimeout(clearTitleLoadingPrompt, 4000);
+            $("#about-view").click(function(){
+                removeSocialIcon();
+                clearTitleLoadingPrompt();
+                setTimeout(function(){
+                    $("#home-sub-page").fadeOut(0);
+                    $("#about-sub-page").fadeIn(400);
+                }, 400);
+            });
+            $("#home-view").click(function(){
+                $("#about-sub-page").fadeOut(400);
+                setTimeout(function(){
+                    removeSocialIcon();
+                    titleLoadingPrompt();
+                    $("#home-sub-page").fadeIn(400);
+                }, 300);
+            });
+
+            $(".navi a").click(function(e) {
+                if($(this).hasClass("current")) {
+                    $(this).removeClass("current");
+                } else {
+                $(".navi a").removeClass("current");
+                    $(this).addClass("current");
+                }
+           });
+        });
+    </script>
+    <div class="hidden-area">
+        <img id="first-background-img" src="/static/img/slider1.jpg" onload="firstBackgroundImgOnLoad()">
+        <img src="/static/img/slider2.jpg">
+        <img src="/static/img/slider3.jpg">
+        <img src="/static/img/slider4.jpg">
+    </div>
 </body>
 </html>

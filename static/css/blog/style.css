@@ -37,9 +37,10 @@ a:hover{
     text-decoration:underline;
 }
 body{
-    background:#333;
+    background: black;
     font-family: 'TeXGyreAdventorBold';
     color:#fff;line-height:2;
+    transition: background 1s;
 }
 h1, h2, h3, h4, h5, h6{font-weight:normal;}
 .center{text-align:center;}
@@ -47,9 +48,28 @@ h1, h2, h3, h4, h5, h6{font-weight:normal;}
 .inner-content{padding:40px 0;}
 [class^="icon-"]:before, [class*=" icon-"]:before{text-decoration:none;}
 .title{margin:20px 0;}
-.motto{margin-top:60px;}
+.motto{
+    position: absolute;
+    width: 340px;
+    height: 150px;
+    left: calc(50% - 170px);
+    top: calc(40% - 170px);
+}
+#madliar-title{
+    position: absolute;
+    width: 400px;
+    left: calc(50% - 200px);
+    transition: top 1s, opacity 0.3s;
+    top: 0;
+}
 .bottom-content{margin-bottom:80px;}
-.copyright{font-size:12px;position: absolute;bottom: 80px;width: 100%;}
+.copyright{
+    font-size:12px;
+    margin: 10px 0px;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+}
 .loader{position:fixed;width:100%;left:0;top:20%;text-align:center;}
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
     background-color: transparent;
@@ -63,12 +83,18 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     width: 80%;
 }
 .social-list {
-    left: 0;
-    padding-top: 20px;
-    position: absolute;
-    top: 0;
     width: 100%;
-	z-index:9;
+    height: 60px;
+    overflow-y: hidden;
+    position: fixed;
+    top: 40px;
+}
+.social-icon{
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: calc(50% - 150px);
+    transition: top 0.7s;
 }
 .social-icon a {
     background: none repeat scroll 0 0 #1B100C;
@@ -82,9 +108,25 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     width: 20px;
 }
 .social-icon a:hover{background:#9FD632;}
-.mask {position:fixed;width:100%;height:100%;top:0;left:0;opacity:0.5;z-index:-2;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";}
+.mask {
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    opacity:0.5;
+    z-index:-2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    transition: background-image 5s;
+}
 .loadcolor{background:#371306;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";opacity:0.7;}
-.homecolor{background:#0a2d3b;}
+.homecolor{
+    background-image: url(/static/img/slider1.jpg);
+    background-size:cover;
+}
+.hidden-area{
+    display: none;
+}
 .aboutcolor{background:#4E005B;}
 .contactcolor{background:#413D00;}
 .color{color:#9FD632;}
@@ -163,18 +205,13 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     background:none repeat scroll 0 0 #9FD632;
     color:#fff;
 }
-.motto p{
-    max-width:800px;
-    margin:auto;
-    color:#dedede;
-}
+
 .white{
     color:#fff;
 }
 .big, .big h2 {
     font-size: 75px;
     line-height: 80px;
-	font-family: RobotoBlack;
 	margin:0;
 }
 .big{margin-bottom:20px;}
@@ -200,7 +237,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     font-family:'TeXGyreAdventorBold';
 }
 #clock li i {
-    background: url("../images/hex.png") no-repeat scroll center center transparent !important;
+    background: url("/static/img/hex.png") no-repeat scroll center center transparent !important;
     color: #FFFFFF;
     font-size: 18px;
     height: 80px;
@@ -258,7 +295,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 }
 #service ul li span{font-family:'TeXGyreAdventorBold';}
 #service li i {
-    background: url("../images/hex.png") no-repeat scroll center center transparent !important;
+    background: url("/static/img/hex.png") no-repeat scroll center center transparent !important;
     color: #FFFFFF;
     font-size: 15px;
     height: 80px;
@@ -281,7 +318,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 #address li p{font-size:22px;text-transform:uppercase;line-height:20px;color:#fff;}
 #address ul li span{font-family:'TeXGyreAdventorBold';}
 #address li i {
-    background: url("../images/hex.png") no-repeat scroll center center transparent !important;
+    background: url("/static/img/hex.png") no-repeat scroll center center transparent !important;
     color: #FFFFFF;
     font-size: 15px;
     height: 80px;
@@ -300,7 +337,31 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     color:#fff;
 }
 .rrt-author-img{margin-right:10px;}
-
+.head-background-img{
+    width: 100%;
+    height: 400px;
+}
+#head-img-container{
+    width: 150px;
+    margin-top: -300px;
+    margin-left: calc(50% - 75px);
+    border-radius: 75px;
+    overflow: hidden;
+}
+#about-sub-page h4{
+    text-shadow: 0px 0px 8px #6a6a6a;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 22px;
+}
+#about-text{
+    width: 768px;
+    margin-left: calc(50% - 426px);
+    position: absolute;
+    margin-top: 100px;
+    padding: 20px 40px 0px 40px;
+    word-break: break-all !important;
+}
 /*-----------------------------media queries-----------------------------------*/
 @media (max-width: 767px) {
     .menu, #home{
@@ -313,6 +374,13 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 		font-size: 60px;
 		line-height: 70px;
     }
+    #about-text{
+        width: calc(100% - 2em);
+        margin-left: 0;
+        position: absolute;
+        margin-top: 100px;
+        padding: 20px 10px 0px 10px;
+    }
 }
 @media (max-width:480px){
 	.menu{
@@ -320,9 +388,6 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     }
     .navi li a{
         line-height: 60px;
-    }
-    .copyright{
-        margin-bottom:10px;
     }
 	.big, .big h2 {
         font-size: 50px;
@@ -334,6 +399,13 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     }
 	.navi li a{
         padding:0 15px;
+    }
+    #about-text{
+        width: calc(100% - 2em);
+        margin-left: 0;
+        position: absolute;
+        margin-top: 100px;
+        padding: 20px 10px 0px 10px;
     }
 }
 @media (max-width:400px){
@@ -349,6 +421,13 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 	.navi li a {
 		padding: 0 11px;
 	}
+    #about-text{
+        width: calc(100% - 2em);
+        margin-left: 0;
+        position: absolute;
+        margin-top: 100px;
+        padding: 20px 10px 0px 10px;
+    }
 }
 @media (max-width:320px){
 	.logo{
@@ -357,4 +436,11 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 	.navi li a {
 		padding: 0 11px;
 	}
+    #about-text{
+        width: calc(100% - 2em);
+        margin-left: 0;
+        position: absolute;
+        margin-top: 100px;
+        padding: 20px 10px 0px 10px;
+    }
 }
