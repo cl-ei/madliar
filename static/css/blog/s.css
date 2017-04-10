@@ -67,7 +67,6 @@ h1, h2, h3, h4, h5, h6{
     left: calc(50% - 170px);
     top: calc(40% - 75px);
     overflow: hidden;
-    transform: translateZ(0);
 }
 #madliar-title{
     position: absolute;
@@ -410,12 +409,13 @@ input[type="color"]:focus, .uneditable-input:focus{
     margin-top: 2em;
     display: block;
 }
-#mask, .sub-mask{
+#mask{
     width: calc(100% + 40px);
     height: calc(100% + 40px);
     top: -20px;
     left: -20px;
     position: fixed;
+    transition: opacity 0.7s, background-image 3s;
     opacity: 0;
     filter: brightness(150%) blur(10px);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
@@ -424,31 +424,11 @@ input[type="color"]:focus, .uneditable-input:focus{
     transform: translateZ(0);
     z-index: -1;
 }
-#mask{
-    transition: opacity 0.7s;
-}
-.sub-mask{
-    transition: opacity 3s;
-}
-.sub-mask:nth-child(1){
-    background-image: url("/static/img/slider1.jpg");
-}
-.sub-mask:nth-child(2){
-    background-image: url("/static/img/slider2.jpg");
-}
-.sub-mask:nth-child(3){
-    background-image: url("/static/img/slider3.jpg");
-}
-.sub-mask:nth-child(4){
-    background-image: url("/static/img/slider0.jpg");
-}
 #home-sub-page{
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
     max-width: 1200px;
-}
-.blog-box-container{
     transform: translateZ(0);
 }
 .blog-box-container:nth-child(2){
