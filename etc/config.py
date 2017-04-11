@@ -1,4 +1,10 @@
-__all__ = ("DEBUG", "STATICS_URL_MAP"， "POST_ARTICLE_PATH")
+__all__ = (
+    "DEBUG",
+    "STATICS_URL_MAP",
+    "POST_ARTICLE_PATH",
+    "PARSED_ARTICLE_PATH",
+    "PARSED_ARTICLE_INDEX_PATH",
+)
 
 # email config
 mail_host = 'smtp.caoliang.net'
@@ -13,5 +19,8 @@ STATICS_URL_MAP = {
     "^/static": "static",
 }
 
-POST_ARTICLE_PATH = ""
+PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/localprj"
+POST_ARTICLE_PATH = "template/_post/article"
+PARSED_ARTICLE_PATH = "template/_post/json"
+PARSED_ARTICLE_INDEX_PATH = "template/_post"
 
