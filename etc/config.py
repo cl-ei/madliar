@@ -1,9 +1,9 @@
 __all__ = (
     "DEBUG",
-    "STATICS_URL_MAP",
+    "PROJECT_ROOT",
     "POST_ARTICLE_PATH",
-    "PARSED_ARTICLE_PATH",
-    "PARSED_ARTICLE_INDEX_PATH",
+    "PARSED_ARTICLE_JSON",
+    "STATICS_URL_MAP",
 )
 
 # email config
@@ -14,13 +14,11 @@ sender = 'i@caoliang.net'
 
 DEBUG = True
 
+PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/localprj"
+POST_ARTICLE_PATH = "template/_post/article"
+PARSED_ARTICLE_JSON = "static/blog/article"
+
 STATICS_URL_MAP = {
     "^/statics": "application/blog/static",
     "^/static": "static",
 }
-
-PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/localprj"
-POST_ARTICLE_PATH = "template/_post/article"
-PARSED_ARTICLE_PATH = "template/_post/json"
-PARSED_ARTICLE_INDEX_PATH = "template/_post"
-

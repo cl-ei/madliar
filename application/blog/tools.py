@@ -3,7 +3,8 @@ import sys
 import os
 import re
 import json
-from etc.config import DEBUG, PROJECT_ROOT, POST_ARTICLE_PATH, PARSED_ARTICLE_PATH, PARSED_ARTICLE_INDEX_PATH
+from etc.config import DEBUG, PROJECT_ROOT, POST_ARTICLE_PATH, PARSED_ARTICLE_JSON
+from lib.randomlib import randstr
 
 
 class ArticleParser(object):
@@ -47,6 +48,8 @@ class ArticleParser(object):
 
     def __parse_body(self):
         preview = self.body.split("<!--more-->")[0]
+        preview = re.sub("<img.*>\s+", "", preview)
+        preview = re.sub("^\s*#.*\s+", "", preview)
         self.header_info["preview"] = preview
 
         m = re.match(r"<img\s*src=([^\s]+).*>?", self.body)
@@ -82,30 +85,24 @@ def generate_cached_article_json(*args, **kwargs):
     article_path = os.path.join(PROJECT_ROOT, POST_ARTICLE_PATH)
     file_list = os.listdir(article_path)
 
+    article_list = {}
     for file_name in file_list:
         parser = ArticleParser(file_name=file_name, file_path=article_path)
-        content = json.dumps(
-            parser.article_info,  # every key/value must be unicode
-            ensure_ascii=False,
-            indent=4 if DEBUG else None,
-        )
-        with open(os.path.join(PARSED_ARTICLE_PATH, str(parser.id)), "w") as f:
-            f.write(content.encode("utf-8"))
+        article_list[parser.id] = parser.article_info
 
-    articles = sorted(map(int, os.listdir(PARSED_ARTICLE_PATH)))
-    articles.reverse()
+    detail = json.dumps(
+        article_list,
+        ensure_ascii=False,
+        indent=4 if DEBUG else None
+    )
+    id_list = json.dumps(sorted(article_list.keys())[::-1])
+    total_article = u"window.articleList=" + detail + ";window.articleIdList=" + id_list
 
-    index_info = []
-    for article in articles[:10]:
-        with open(os.path.join(PARSED_ARTICLE_PATH, str(article))) as f:
-            article_info = json.loads(f.read())
+    article_js_file_path = os.path.join(PROJECT_ROOT, PARSED_ARTICLE_JSON)
+    for existed_file in os.listdir(article_js_file_path):
+        print existed_file
+        os.remove(os.path.join(article_js_file_path, existed_file))
 
-        _ = {}
-        for k in ["id", "title", "tags", "create_time", "first_figure", "preview"]:
-            _[k] = article_info[k] if k in article_info else None
-        index_info.append(_)
-
-    index_json = json.dumps(index_info, ensure_ascii=False, indent=4 if DEBUG else None)
-    with open(os.path.join(PARSED_ARTICLE_INDEX_PATH, "index.json"), "w") as f:
-        f.write(index_json.encode("utf-8"))
-    return True
+    article_js_file = os.path.join(PARSED_ARTICLE_JSON, randstr(64) + ".js")
+    with open(article_js_file, "w") as f:
+        f.write(total_article.encode("utf-8"))
