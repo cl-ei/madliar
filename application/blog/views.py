@@ -12,6 +12,10 @@ def favicon_response(request):
 
 
 def home_page(request):
-    article_js_file_name = os.listdir(os.path.join(PROJECT_ROOT, PARSED_ARTICLE_JSON))[0]
+    article_file_path = os.path.join(PROJECT_ROOT, PARSED_ARTICLE_JSON)
+    article_js_file_name = os.listdir(article_file_path)[0]
     article_js = os.path.join(PARSED_ARTICLE_JSON, article_js_file_name)
-    return render("template/home_page.html", context={"article_js": article_js})
+    return render(
+        "template/home_page.html",
+        context={"article_js": article_js}
+    )

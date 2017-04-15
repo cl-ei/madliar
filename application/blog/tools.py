@@ -3,7 +3,8 @@ import sys
 import os
 import re
 import json
-from etc.config import DEBUG, PROJECT_ROOT, POST_ARTICLE_PATH, PARSED_ARTICLE_JSON
+from etc.config import DEBUG, PROJECT_ROOT, POST_ARTICLE_PATH, \
+    PARSED_ARTICLE_JSON
 from lib.randomlib import randstr
 
 
@@ -19,7 +20,10 @@ class ArticleParser(object):
 
         with open(os.path.join(self.path, self.name), "r") as f:
             content = f.read()
-        self.content = content if isinstance(content, unicode) else content.decode("utf-8")
+        if isinstance(content, unicode):
+            self.content = content
+        else:
+            self.content = content.decode("utf-8")
 
         self.header = None
         self.header_style_pattern = re.compile(r"(\w+)\s*:\s*(.*)")
@@ -41,7 +45,8 @@ class ArticleParser(object):
                 k, v = match.groups()
                 if k in ["tag", "tags"]:
                     k = "tags"
-                    v = [tag.strip(" \r\n") for tag in v.replace(u'，', ",").split(",")]
+                    tag_list = v.replace(u'，', ",").split(",")
+                    v = [tag.strip(" \r\n") for tag in tag_list]
                 else:
                     v = v.strip(" \r\n")
                 self.header_info.update({k: v})
@@ -96,7 +101,10 @@ def generate_cached_article_json(*args, **kwargs):
         indent=4 if DEBUG else None
     )
     id_list = json.dumps(sorted(article_list.keys())[::-1])
-    total_article = u"window.articleList=" + detail + ";window.articleIdList=" + id_list
+    total_article = u"".join([
+        "window.articleList=", detail, ";",
+        "window.articleIdList=", id_list
+    ])
 
     article_js_file_path = os.path.join(PROJECT_ROOT, PARSED_ARTICLE_JSON)
     for existed_file in os.listdir(article_js_file_path):

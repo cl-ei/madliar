@@ -129,7 +129,6 @@ $(function(){
         clearTitleLoadingPrompt();
         $("#home-sub-page").fadeOut(0);
         $("#about-sub-page").fadeIn(400);
-        document.body.scrollTop = 0;
     });
     $("#home-view").click(function(){
         $("#about-sub-page").fadeOut(0);
