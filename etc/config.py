@@ -16,7 +16,7 @@ DEBUG = True
 
 PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/localprj"
 POST_ARTICLE_PATH = "template/_post/article"
-PARSED_ARTICLE_JSON = "static/blog/article"
+PARSED_ARTICLE_JSON = "static/blog/js/article"
 
 STATICS_URL_MAP = {
     "^/statics": "application/blog/static",
