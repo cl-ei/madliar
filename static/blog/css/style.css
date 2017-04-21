@@ -637,6 +637,7 @@ section p{
         position: relative;
         padding: 1em;
         color:#333;
+        overflow-x: overlay;
     }
     .blog-concise p{
         text-align: justify;
