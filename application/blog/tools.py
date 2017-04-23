@@ -45,8 +45,8 @@ class ArticleParser(object):
                 k, v = match.groups()
                 if k in ["tag", "tags"]:
                     k = "tags"
-                    tag_list = v.replace(u'，', ",").split(",")
-                    v = [tag.strip(" \r\n") for tag in tag_list]
+                    tag_list = v.replace(u'，', ",").replace(u' ', ",").split(",")
+                    v = [tag.strip(" \r\n") for tag in tag_list if tag]
                 else:
                     v = v.strip(" \r\n")
                 self.header_info.update({k: v})

@@ -171,7 +171,8 @@ window.articleList={
         "category": "学习笔记", 
         "layout": "post", 
         "tags": [
-            "编程 Python"
+            "编程", 
+            "Python"
         ], 
         "title": "借助Nginx+uWSGI，部署Django项目到生产环境", 
         "first_figure": "/static/blog/img/project/20160811/0.jpg", 
@@ -223,7 +224,8 @@ window.articleList={
         "layout": "post", 
         "description": "制作做机器人的第一步", 
         "tags": [
-            "编程 树莓派"
+            "编程", 
+            "树莓派"
         ], 
         "title": "树莓派之电机驱动", 
         "first_figure": "/static/blog/img/blog/20170127/0.jpg", 
@@ -510,7 +512,8 @@ window.articleList={
         "layout": "post", 
         "description": "没有显示器怎么办？别担心，建立远程连接", 
         "tags": [
-            "编程 树莓派"
+            "编程", 
+            "树莓派"
         ], 
         "title": "树莓派之无显示器使用", 
         "first_figure": "/static/blog/img/blog/20170127/0.jpg", 
@@ -524,7 +527,8 @@ window.articleList={
         "layout": "post", 
         "description": "乐于去改变，让事情变得更简单", 
         "tags": [
-            "编程 树莓派"
+            "编程", 
+            "树莓派"
         ], 
         "title": "树莓派之初见", 
         "first_figure": "/static/blog/img/blog/20170127/0.jpg", 

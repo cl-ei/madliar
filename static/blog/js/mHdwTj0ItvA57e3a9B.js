@@ -1,5 +1,8 @@
 function clearTitleLoadingPrompt(){
-    $("#madliar-title").css({top: "140px", "opacity": 0});
+    var madLiarTitle = $("#madliar-title");
+    if(madLiarTitle.css("opacity")){
+        madLiarTitle.css({top: "140px", "opacity": 0});
+    }
 }
 function loadArticle(){
     clearTitleLoadingPrompt();
@@ -103,7 +106,7 @@ function articleReadingView(article_id){
                 '</div>',
                 '<div class="detail-content">' + marked(article.content) + '</div>',
                 '<div class="detail-footer">版权所有，请勿侵权。作者：' + (article.author || "CL") + '，最后更新于' + article.create_time + '</div>',
-                next + prev,
+                prev + next,
                 '<div class="m-comment">',
                     '想要添加评论？',
                     '<a href="mailto:i@caoliang.net?subject=评论《'+ article.title +'》">点击此处</a>给作者发送邮件',
@@ -121,25 +124,87 @@ function articleReadingView(article_id){
     $(".next-article-btn, .prev-article-btn").click(function(){
         articleReadingView($(this).data("id"));})
 }
+function onBackToHome(){
+    if (window.history && window.history.pushState) {
+        $(window).on('popstate', function () {
+            window.history.pushState('forward', null, '#');
+            window.history.forward(1);
+            return $("#detail-sub-page:visible").length > 0
+                ? showHomePage()
+                : null;
+        });
+    }
+    window.history.pushState('forward', null, '#');
+    window.history.forward(1);
+}
+function showHomePage(){
+    $("section").children().fadeOut(0);
+    $("#home-sub-page").fadeIn(0);
+}
+function renderArticleListPage(){
+    for(var i = 0; i < articleIdList.length; i++){
+        var article = articleList[articleIdList[i]];
+        var tags = article.tags;
+        if(tags != undefined){
+            for(var j = 0; j < tags.length; j++){
+                var tag = tags[j],
+                    existTagBtn = $(".tag-btn[data-tag='" + tag + "']");
+                console.log(tag);
+                if(existTagBtn.length == 0){
+                    $("<botton>", {
+                        class: "tag-btn",
+                        "data-tag": tag,
+                        "data-len": 1,
+                        html: tag + " 1"
+                    }).appendTo("#article-list-tag");
+                }else{
+                    var existTagLen = existTagBtn.data("len") + 1;
+                    existTagBtn.data("len", existTagLen).html(tag + " " + existTagLen);
+                }
+            }
+        }
+
+        /* load article */
+        $("<div>", {
+            calss: "list-post clearfix",
+            "data-tag": (article.tags || []).join(" "),
+            "category": article.category,
+            html: [
+                '<h3 style="margin-bottom:0px">',
+                    '<a data-id="' + article.id + '">' + article.title + '</a>',
+                '</h3>',
+                '<div class="al_meta"><footer>',
+                    '<span class="categories">' + article.category + '</span>',
+                    '@ <time class="date">' + article.create_time + '</time>',
+                '</footer></div>'
+            ].join("")
+        }).appendTo("#article-list");
+    }
+}
 $(function(){
     $(".logo").shuffleLetters();
+    onBackToHome();
     renderHomePage();
+    renderArticleListPage();
     initialization();
     $("#about-view").click(function(){
         clearTitleLoadingPrompt();
-        $("#home-sub-page").fadeOut(0);
+        $("section").children().fadeOut(0);
         $("#about-sub-page").fadeIn(400);
         document.body.scrollTop = 0;
     });
     $("#home-view").click(function(){
-        $("#about-sub-page").fadeOut(0);
-        $("#home-sub-page").fadeIn(0);
+        showHomePage();
+    });
+    $("#list-view").click(function(){
+        $("section").children().fadeOut(0);
+        $("#list-view-sub").fadeIn(400);
     });
     $(".navi a").click(function(e) {
         if($(this).hasClass("current")) {
             $(this).removeClass("current");
-        } else {
-        $(".navi a").removeClass("current");
+        }else{
+            $(".navi a").removeClass("current");
             $(this).addClass("current");
         }
    });

@@ -491,6 +491,22 @@ section p{
 .read-more{
     font-size: 14px;
 }
+.category-desc{
+    border-bottom: 1px solid #ccc;
+}
+.tag-btn{
+    border: 1px solid #ccc;
+    padding: 5px 12px 5px 12px;
+    border-radius: 5px;
+    margin: 0 2px;
+    cursor: pointer;
+    transition: background .4s, color .4s, border .3s;
+}
+.tag-btn:hover{
+    background: #9fd632;
+    color: white;
+    border: 1px solid #9fd632;
+}
 /*-----------------------------media queries-----------------------------------*/
 @media (max-width: 9999px) {
     /* detail page */
