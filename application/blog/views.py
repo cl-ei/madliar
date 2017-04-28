@@ -1,4 +1,5 @@
 import os
+import json
 from wsgiserver.template import render
 from wsgiserver.http import HttpResponse
 
@@ -19,3 +20,8 @@ def home_page(request):
         "template/home_page.html",
         context={"article_js": article_js}
     )
+
+
+def record(request):
+    # TODO: add ...
+    return HttpResponse(json.dumps({"err_code": 0}), content_type="application/json")

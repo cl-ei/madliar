@@ -1,42 +1,39 @@
+function record(msg){
+    $.ajax({
+        url: "/record",
+        type: "get",
+        data: {
+            "url": msg || "none"
+        },
+        success: function(data){
+            console.log(data);
+        },
+        error:function(e){
+            console.log(e);
+        }
+    });
+}
+function generateRadomInt(top){
+    top = top || 5;
+    return parseInt(Math.random()*top, 10);
+}
+function runCanvas() {
+    var engine = new RainyDay({
+        image: this
+    });
+    engine.rain([ [3, 3, 0.68], [5, 5, 0.1], [3, 2, 1] ], 30);
+    clearTitleLoadingPrompt();
+    $("#home-sub-page").fadeIn(300).next().fadeOut(0);
+    $("#background, canvas").css({opacity: 1});
+}
 function clearTitleLoadingPrompt(){
     var madLiarTitle = $("#madliar-title");
     if(madLiarTitle.css("opacity")){
         madLiarTitle.css({top: "140px", "opacity": 0});
     }
 }
-function loadArticle(){
-    clearTitleLoadingPrompt();
-    $("#home-sub-page").fadeIn(300).next().fadeOut(0);
-}
-function startFlushBackgroundImage(){
-    window.backgroundImageIndex = 0;
-    window.backgroundImageFlushInterVal = 0;
-    var speedIntVal = 6000;
-
-    window.backgroundImageFlushInterVal = setInterval(function(){
-        if(window.backgroundImageIndex == 0){
-            $("#mask").css({transition: "opacity 3s", opacity: 0});
-        }
-        window.backgroundImageIndex += 1;
-        var currentIndex = parseInt(window.backgroundImageIndex % 4);
-        for (var i = 0; i < 4; i++){
-            $(".sub-mask").eq(i).css("opacity", i == currentIndex ? "1" : "0" );
-        }
-    }, speedIntVal);
-}
-function onFirstBackgroundImageLoad(){
-    $("#mask").css({
-        "opacity": 1,
-        "background-image": 'url("/static/img/slider0.jpg")'
-    });
-    startFlushBackgroundImage();
-    loadArticle();
-}
 function initialization(){
-    $('<img src="/static/img/slider0.jpg" onload="onFirstBackgroundImageLoad()">').appendTo($("#hidden-area"));
-    for (var i = 0; i < 4; i ++) {
-        $('<div class="sub-mask" style="background-image: url(/static/img/slider' + i + '.jpg)">').appendTo($("body"));
-    }
+    $('#background').on("load", runCanvas).attr("src", "/static/img/" + generateRadomInt() + ".jpg");
 }
 function renderHomePage(){
     var homePageArticleBoxHtml = "";
@@ -74,6 +71,7 @@ function renderHomePage(){
     })
 }
 function articleReadingView(article_id){
+    record("article_" + article_id);
     var article = window.articleList[article_id],
         article_index = window.articleIdList.indexOf(article_id),
         next = "",
@@ -100,8 +98,8 @@ function articleReadingView(article_id){
         '<div class="detail-container animated fadeInDownSlow">',
             '<div class="detail-paper">',
                 '<div class="detail-header">',
-                    '<div class="detail-article-close">X</div>',
-                    '<div class="detail-article-return">←</div>',
+                    '<div class="detail-article-close"><i class="fa fa-times" aria-hidden="true"></i></div>',
+                    '<div class="detail-article-return"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>',
                     '<div class="detail-article-title">' + article.title + '</div>',
                 '</div>',
                 '<div class="detail-content">' + marked(article.content) + '</div>',
@@ -142,6 +140,10 @@ function showHomePage(){
     $("#home-sub-page").fadeIn(0);
 }
 function renderArticleListPage(){
+    $("<botton>", {
+        class: "tag-btn tag-btn-all",
+        html: "全部 " + articleIdList.length
+    }).appendTo("#article-list-tag");
     for(var i = 0; i < articleIdList.length; i++){
         var article = articleList[articleIdList[i]];
         var tags = article.tags;
@@ -149,7 +151,6 @@ function renderArticleListPage(){
             for(var j = 0; j < tags.length; j++){
                 var tag = tags[j],
                     existTagBtn = $(".tag-btn[data-tag='" + tag + "']");
-                console.log(tag);
                 if(existTagBtn.length == 0){
                     $("<botton>", {
                         class: "tag-btn",
@@ -166,20 +167,42 @@ function renderArticleListPage(){
 
         /* load article */
         $("<div>", {
-            calss: "list-post clearfix",
+            class: "list-post clearfix",
             "data-tag": (article.tags || []).join(" "),
             "category": article.category,
             html: [
-                '<h3 style="margin-bottom:0px">',
-                    '<a data-id="' + article.id + '">' + article.title + '</a>',
-                '</h3>',
+                '<h4 style="margin-bottom:0px">',
+                    '<a class="list-post-a" data-id="' + article.id + '">' + article.title + '</a>',
+                '</h4>',
                 '<div class="al_meta"><footer>',
                     '<span class="categories">' + article.category + '</span>',
-                    '@ <time class="date">' + article.create_time + '</time>',
+                    ' @<time class="date">' + article.create_time + '</time>',
                 '</footer></div>'
             ].join("")
         }).appendTo("#article-list");
     }
+    /* bind event */
+    $(".tag-btn").click(function(){
+        if($(this).hasClass("tag-btn-all")){
+            $(".list-post").fadeIn(200);
+        }else{
+            var articleTitleList = $(".list-post").fadeOut(0),
+                selTag = $(this).data("tag");
+            for(var i = 0; i < articleTitleList.length; i++){
+                if(articleTitleList.eq(i).data("tag").indexOf(selTag) > -1){
+                    articleTitleList.eq(i).fadeIn(200);
+                }
+            }
+            $(this).addClass("tag-btn-selected").siblings().removeClass("tag-btn-selected");
+        }
+    });
+    $(".category-desc a").click(function(){
+        $(".list-post").fadeOut(0);
+        $(".list-post[category=" + $(this)[0].innerText + "]").fadeIn(200);
+    });
+    $(".list-post-a").click(function(){
+        articleReadingView($(this).data("id"));
+    });
 }
 $(function(){
     $(".logo").shuffleLetters();
@@ -188,6 +211,7 @@ $(function(){
     renderArticleListPage();
     initialization();
     $("#about-view").click(function(){
+        record("about");
         clearTitleLoadingPrompt();
         $("section").children().fadeOut(0);
         $("#about-sub-page").fadeIn(400);
@@ -197,6 +221,7 @@ $(function(){
         showHomePage();
     });
     $("#list-view").click(function(){
+        record("list_view");
         $("section").children().fadeOut(0);
         $("#list-view-sub").fadeIn(400);
     });
@@ -207,5 +232,5 @@ $(function(){
             $(".navi a").removeClass("current");
             $(this).addClass("current");
         }
-   });
+    });
 });
