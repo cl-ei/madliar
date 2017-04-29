@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import random
 import sys
 import os
 import re
@@ -61,7 +62,7 @@ class ArticleParser(object):
         if m:
             first_figure = m.groups()[0].strip("'\"")
         else:
-            first_figure = "/static/blog/img/blog/20170127/0.jpg"
+            first_figure = "/static/blog/img/preview_" + str(random.randint(0, 5)) + ".jpg"
         self.header_info["first_figure"] = first_figure
 
     @property

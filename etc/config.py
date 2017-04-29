@@ -1,5 +1,3 @@
-# -*- coding:utf-8 -*-
-
 __all__ = (
     "DEBUG",
     "PROJECT_ROOT",
@@ -14,7 +12,7 @@ mail_user = 'i@caoliang.net'
 mail_pass = '000000'
 sender = 'i@caoliang.net'
 
-DEBUG = False
+DEBUG = True
 
 PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/madliar"
 POST_ARTICLE_PATH = "template/_post/article"

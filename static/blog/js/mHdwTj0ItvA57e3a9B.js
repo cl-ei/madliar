@@ -16,10 +16,13 @@ $(function(){
         return parseInt(Math.random()*top, 10);
     }
     function runCanvas() {
-        var engine = new RainyDay({image: this});
-        engine.rain([ [2, 1, 0.08], [1, 1, 0.1], [3, 3, 0.2]], 0);
-        setTimeout(function(){engine.stopRain()}, 30000);  // 30 seconds
+        if(document.body.clientWidth > 700){
+            var engine = new RainyDay({image: this});
+            engine.rain([ [2, 1, 0.08], [1, 1, 0.1], [3, 3, 0.2]], 0);
+            setTimeout(function(){engine.stopRain()}, 30000);  // 30 seconds
+        }
         clearTitleLoadingPrompt();
+
         $("#home-sub-page").fadeIn(300).next().fadeOut(0);
         $("#background, canvas").css({opacity: 1});
     }
@@ -137,7 +140,7 @@ $(function(){
         $("#home-sub-page").fadeIn(0);
     }
     function renderArticleListPage(){
-        $("<botton>", {
+        $("<div>", {
             class: "tag-btn tag-btn-all",
             html: "全部 " + articleIdList.length
         }).appendTo("#article-list-tag");
@@ -149,7 +152,7 @@ $(function(){
                     var tag = tags[j],
                         existTagBtn = $(".tag-btn[data-tag='" + tag + "']");
                     if(existTagBtn.length == 0){
-                        $("<botton>", {
+                        $("<div>", {
                             class: "tag-btn",
                             "data-tag": tag,
                             "data-len": 1,

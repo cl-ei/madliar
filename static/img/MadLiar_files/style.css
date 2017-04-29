@@ -199,7 +199,6 @@ input[type="color"]:focus, .uneditable-input:focus{
     font-size: 40px;
     user-select:none;
     cursor: default;
-    position: absolute;
 }
 .right-menu{
     float:right;
@@ -437,7 +436,7 @@ input[type="color"]:focus, .uneditable-input:focus{
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
-    max-width: 1050px;
+    max-width: 1200px;
 }
 .blog-box-container{
     transform: translateZ(0);
@@ -498,11 +497,10 @@ section p{
     border-bottom: 1px solid #ccc;
 }
 .tag-btn{
-    display: inline-block;
     border: 1px solid #ccc;
-    padding: 0px 8px 0px 8px;
+    padding: 5px 12px 5px 12px;
     border-radius: 5px;
-    margin: 2px 2px;
+    margin: 0 2px;
     cursor: pointer;
     transition: background .4s, color .4s, border .3s;
 }
@@ -521,7 +519,6 @@ section p{
 }
 .list-post{
     border-bottom: 1px solid;
-    padding: 20px;
 }
 .list-post-a, .category-desc a{
     cursor: pointer;
@@ -550,15 +547,10 @@ canvas{
 }
 #background{
     opacity: 0;
-    width: calc(100% + 40px);
-    height: calc(100% + 40px);
+    width: 100%;
+    height: 100%;
     transform: translateZ(0);
     transition: opacity 1.3s;
-    position: fixed;
-    top: -20px;
-    left: -20px;
-    z-index: -20;
-    filter: blur(10px);
 }
 .about-container{
     margin-top: 40px;
@@ -566,9 +558,6 @@ canvas{
     margin-right: auto;
     max-width: 1200px;
     background: white;
-}
-.detail-content img{
-    margin: 5px 0 5px 0;
 }
 /*
  * media queries
@@ -718,6 +707,7 @@ canvas{
         position: relative;
         padding: 1em;
         color:#333;
+        overflow-x: overlay;
         box-shadow: 20px 4px 20px 0 rgba(0, 0, 0, 0.15);
     }
     .blog-concise p{
@@ -743,7 +733,7 @@ canvas{
         z-index: 2;
     }
     .blog-concise-preimg{
-        height: 225px;
+        height: 180px;
         overflow: hidden;
         width: calc(100% - 40px);
         border-radius: 0px;
@@ -763,19 +753,10 @@ canvas{
     }
     .blog-concise-content{
         padding: 0 30px 0 30px;
-        overflow-x: auto;
     }
     .read-more{
         margin: 15px 0px 0px 10px;
         display: block;
-    }
-    .detail-content{
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .detail-content p, .detail-content ul{
-        padding-left: 20px;
-        padding-right: 20px;
     }
 }
 @media (max-width: 767px) {
@@ -798,6 +779,7 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
+        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
     }
@@ -883,8 +865,8 @@ canvas{
     .blog-concise-preimg{
         height: 180px;
         overflow: hidden;
-        idth: calc(100% - 30px);
-        border-radius: 0;
+        width: 100%;
+        border-radius: 0px;
         margin-bottom: 20px;
     }
     .blog-concise-preimg img{
@@ -899,10 +881,6 @@ canvas{
     }
     .blog-concise-content{
         padding: 0 20px 0 20px;
-    }
-    .detail-content p, .detail-content ul{
-        padding-left: 10px;
-        padding-right: 10px;
     }
 }
 @media (max-width:480px){
@@ -932,6 +910,7 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
+        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
     }
@@ -941,7 +920,6 @@ canvas{
     }
     #head-img-container{
         width: 120px;
-        height: 120px;
         margin-top: -230px;
         margin-left: calc(50% - 60px);
         border-radius: 75px;
@@ -951,7 +929,7 @@ canvas{
     .blog-concise-preimg{
         height: 140px;
         overflow: hidden;
-        width: calc(100% - 20px);
+        width: 100%;
         border-radius: 5px;
         margin-bottom: 20px;
     }
@@ -960,10 +938,6 @@ canvas{
     }
     .blog-concise-content{
         padding: 0 10px 0 10px;
-    }
-    .detail-content p, .detail-content ul{
-        padding-left: 0;
-        padding-right: 0;
     }
 }
 @media (max-width:400px){
@@ -985,12 +959,9 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
+        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
-    }
-    .detail-content, .detail-content p, .detail-content ul{
-        padding-left: 0;
-        padding-right: 0;
     }
 }
 @media (max-width:320px){
@@ -1003,6 +974,7 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
+        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
     }
