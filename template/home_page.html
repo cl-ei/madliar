@@ -72,39 +72,42 @@
             <div id="about-text">
                 <h2>关于&nbsp·&nbspMADL!AR</h2>
                 <p>博主CL，编程爱好者，目前在西安高新区做服务器端的软件开发。“madliar”意为“疯子”、“谎言者”，略含贬义，
-                    但它挺适合这个博客的：博文大多只是我个人肤浅的观点，偶尔有些粗浅的学习笔记。博文质量不高，
-                    如果你有任何建议或吐槽，欢迎请给我留言或发邮件：i@caoliang.net。
+                    但它挺适合这个博客的：博文大多只是我个人肤浅的观点，少数粗浅的学习笔记。如果你有任何建议或吐槽，
+                    欢迎请给我发邮件：<br />i#caoliang.net。
                 </p>
                 <br />
                 <h2>优秀博客推荐：</h2>
                 <ul>
                     <li><a target="_blank" href="http://wangyu.name/">即刻出发</a></li>
+                    <li><a target="_blank" href="https://mozillazg.github.io/">mozillazg</a></li>
                     <li><a target="_blank" href="http://dkjiaoyang.com/">易冷天涯</a></li>
                     <li><a target="_blank" href="https://alexlee.cn/">聪头话斋</a></li>
                 </ul>
                 <br>
                 <h2>博客结构</h2>
-                <p>之前折腾过很多框架和主题，后来累了，不想再浪费无谓的时间。然后写了一个的基于Python语言的WSGI后端框架来跑这个博客。
-                    如果你感兴趣，肯定会发现这个博客只有一个页面。所有的文章都存放在一个以64位随机字符串命名的js文件当中，
-                    通过js来处理交互逻辑。这也就意味着只需要加载一次，就可以在离线的情况下浏览全站的内容。
+                <p>这个博客是运行在一个自制的基于Python语言的WSGI后端框架上。如果你感兴趣，肯定会发现这个博客只有一个页面。
+                    所有的文章都存放在一个以64位随机字符串命名的js文件当中，通过JavaScript来处理交互逻辑。这也就意味着只需要加载一次，
+                    就可以在离线的情况下浏览全站的内容。
                 </p>
-                <p>这样做当然有诸多缺点，然而并不是这个WSGI框架不支持多页面，是因为我觉得一个小小的博客不应该在这方面太过纠结。
-                    这个博客借鉴了两个网站的样式，其一是<a target="_blank" href="http://www.jsonmedia.com">镜尚传媒的官网</a>，
+                <p>这样做当然有诸多缺点，然而并不是这个WSGI框架不支持多页面，是因为我觉得一个小小的博客不应该与服务器有太多的交互逻辑。
+                    后端使用了一个类似Django模板系统的组件来处理html模板文件，这里受到mozillazg的启发很大，在此表示感谢。
+                    博客基于markdown语言，使用了Christopher Jeffrey的md转html的js插件，在此声明。
+                    前端的样式主要参照了两个网站，其一是<a target="_blank" href="http://www.jsonmedia.com">镜尚传媒的官网</a>，
                     当时其官网尚在筹备当中；其二是<a target="_blank" href="https://blog.coding.net/">码市</a>的博客：
                     <img style="width: 100%" src="/static/img/jsonmedia.png"/>
                     <img style="width: 100%" src="/static/img/coding.png"/>
-                    在此表示鸣谢。
+                    特此声明。
                 </p>
             </div>
         </div>
     </section>
-    <div id="mask-border"><img id="background" src=""/></div>
+    <img id="background" src=""/>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.shuffleLetters.js"></script>
     <script type="text/javascript" src="/static/js/marked.js"></script>
     <script src="{{ article_js }}"></script>
     <script src="/static/blog/js/mHdwTj0ItvA57e3a9B.js"></script>
-    <script src="/static/js/rainyday.min.js"></script>
+    <script src="/static/js/rainyday.js"></script>
 </body>
 </html>

@@ -14,9 +14,9 @@ mail_user = 'i@caoliang.net'
 mail_pass = '000000'
 sender = 'i@caoliang.net'
 
-DEBUG = True
+DEBUG = False
 
-PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/localprj"
+PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/madliar"
 POST_ARTICLE_PATH = "template/_post/article"
 PARSED_ARTICLE_JSON = "static/blog/js/article"
 

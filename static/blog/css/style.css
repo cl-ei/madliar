@@ -199,6 +199,7 @@ input[type="color"]:focus, .uneditable-input:focus{
     font-size: 40px;
     user-select:none;
     cursor: default;
+    position: absolute;
 }
 .right-menu{
     float:right;
@@ -519,6 +520,7 @@ section p{
 }
 .list-post{
     border-bottom: 1px solid;
+    padding: 20px;
 }
 .list-post-a, .category-desc a{
     cursor: pointer;
@@ -546,11 +548,15 @@ canvas{
     width: 100%;
 }
 #background{
-    opacity: 0;
-    width: 100%;
-    height: 100%;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
     transform: translateZ(0);
     transition: opacity 1.3s;
+    position: fixed;
+    top: -20px;
+    left: -20px;
+    z-index: -20;
+    filter: blur(10px);
 }
 .about-container{
     margin-top: 40px;
@@ -558,6 +564,9 @@ canvas{
     margin-right: auto;
     max-width: 1200px;
     background: white;
+}
+.detail-content img{
+    margin: 5px 0 5px 0;
 }
 /*
  * media queries
@@ -758,6 +767,14 @@ canvas{
         margin: 15px 0px 0px 10px;
         display: block;
     }
+    .detail-content{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .detail-content p, .detail-content ul{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 @media (max-width: 767px) {
     .detail-container{
@@ -779,7 +796,6 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
-        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
     }
@@ -882,6 +898,10 @@ canvas{
     .blog-concise-content{
         padding: 0 20px 0 20px;
     }
+    .detail-content p, .detail-content ul{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 @media (max-width:480px){
     .detail-container{
@@ -910,7 +930,6 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
-        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
     }
@@ -939,6 +958,10 @@ canvas{
     .blog-concise-content{
         padding: 0 10px 0 10px;
     }
+    .detail-content p, .detail-content ul{
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 @media (max-width:400px){
     section{
@@ -959,9 +982,12 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
-        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
+    }
+    .detail-content, .detail-content p, .detail-content ul{
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 @media (max-width:320px){
@@ -974,7 +1000,6 @@ canvas{
     #about-text{
         width: calc(100% - 2em);
         margin-left: 0;
-        position: absolute;
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
     }
