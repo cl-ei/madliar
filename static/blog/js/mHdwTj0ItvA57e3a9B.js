@@ -46,7 +46,9 @@ $(function(){
                             '<div class="blog-timeline-spin">',
                                 '<img src="/static/img/hex.png">',
                             '</div>',
-                            '<div class="blog-timeline-time">' + article.create_time + '</div>',
+                            '<div class="blog-timeline-time">' +
+                                '<span class="blog-timeline-content">' + article.create_time + '</span>' +
+                            '</div>',
                         '</div>',
                     '</div>',
                     '<div class="blog-concise-box">',
@@ -219,11 +221,13 @@ $(function(){
         });
         $("#home-view").click(function(){
             showHomePage();
+            document.body.scrollTop = 0;
         });
         $("#list-view").click(function(){
             record("list_view");
             $("section").children().fadeOut(0);
             $("#list-view-sub").fadeIn(400);
+            document.body.scrollTop = 0;
         });
         $(".navi a").click(function(e) {
             if($(this).hasClass("current")) {
