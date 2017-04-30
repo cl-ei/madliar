@@ -62,7 +62,8 @@ class ArticleParser(object):
         if m:
             first_figure = m.groups()[0].strip("'\"")
         else:
-            first_figure = "/static/blog/img/preview_" + str(random.randint(0, 5)) + ".jpg"
+            figure_index = str(random.randint(0, 5))
+            first_figure = "/static/blog/img/preview_%s.jpg" % figure_index
         self.header_info["first_figure"] = first_figure
 
     @property
