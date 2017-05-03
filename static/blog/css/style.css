@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6{
     margin: 10px 0px;
     width: 100%;
     position: absolute;
-    z-index: 999;
+    z-index: -6;
 }
 .loader{
     position:fixed;
@@ -482,10 +482,7 @@ input[type="color"]:focus, .uneditable-input:focus{
     cursor: pointer;
     color: #1b1b1b;
 }
-#detail-sub-page{
-    transform: translateZ(0);
-}
-.detail-paper{
+#detail-sub-page, .detail-paper{
     transform: translateZ(0);
 }
 section p{
@@ -570,11 +567,21 @@ canvas{
 .detail-content img{
     margin: 5px 0 5px 0;
 }
+.blog-timeline-spin img{
+    width: 100%;
+    height: calc(100% + 8px);
+}
+.blog-timeline-content{
+    color: #333;
+}
 /*
  * media queries
  */
 @media (max-width: 9999px) {
     /* detail page */
+    #detail-sub-page{
+        margin-top: 10px;
+    }
     #list-view-sub{
         margin-top: 10px;
     }
@@ -691,9 +698,7 @@ canvas{
         overflow: hidden;
         display: inline-block;
         background: #90a1ac;
-    }
-    .blog-timeline-spin img{
-
+        box-shadow: 4px 4px 8px 2px rgba(0,0,0,.08);
     }
     .blog-timeline-time{
         display: inline-block;
@@ -704,10 +709,11 @@ canvas{
         margin-top: 8px;
         margin-left: 15px;
         padding: 0 5px 0 5px;
-        background: #8d8d8d;
+        background: #fff;
         font-weight: 100;
         font-size: 12px;
         width: 90px;
+        box-shadow: 4px 4px 8px 2px rgba(0,0,0,.08);
     }
     .blog-concise-box{
         box-shadow: 4px 4px 8px 2px rgba(0,0,0,.08);
@@ -780,6 +786,9 @@ canvas{
     }
 }
 @media (max-width: 767px) {
+    #detail-sub-page{
+        margin-top: 20px;
+    }
     #list-view-sub{
         margin-top: 20px;
     }
@@ -853,6 +862,9 @@ canvas{
         display: inline-block;
         background: #90a1ac;
     }
+    .blog-timeline-spin img{
+        margin-top: -8px;
+    }
     .blog-timeline-time{
         display: inline-block;
         border-radius: 8px;
@@ -861,7 +873,6 @@ canvas{
         margin-top: 8px;
         margin-left: 16px;
         padding: 0 10px 0 10px;
-        background: #8d8d8d;
         font-weight: 100;
         font-size: 12px;
     }
@@ -909,7 +920,7 @@ canvas{
     }
 }
 @media (max-width:480px){
-    #list-view-sub{
+    #list-view-sub, #detail-sub-page{
         margin-top: 0;
     }
     .detail-container{

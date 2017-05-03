@@ -1,4 +1,77 @@
 $(function(){
+    $.fn.shuffleLetters = function(prop){
+		var options = $.extend({
+			"step"		: 15,			// How many times should the letters be changed
+			"fps"		: 15,			// Frames Per Second
+			"text"		: "", 			// Use this text instead of the contents
+			"callback"	: function(){}	// Run once the animation is complete
+		},prop);
+		return this.each(function(){
+			var el = $(this),
+				str = "";
+
+			if(el.data('animated')){
+				return true;
+			}else{
+			    el.data('animated',true);
+            }
+			if(options.text) {
+				str = options.text.split('');
+			}else {
+				str = el.text().split('');
+			}
+
+			var types = [],
+				letters = [];
+			for(var i=0;i<str.length;i++){
+				var ch = str[i];
+				if(ch == " "){
+					types[i] = "space";
+					continue;
+				}else if(/[a-z]/.test(ch)){
+					types[i] = "lowerLetter";
+				}else if(/[A-Z]/.test(ch)){
+					types[i] = "upperLetter";
+				}else {
+					types[i] = "symbol";
+				}
+				letters.push(i);
+			}
+			el.html("");
+			(function shuffle(start){
+				var i,
+					len = letters.length,
+					strCopy = str.slice(0);	 // Fresh copy of the string
+
+				if(start>len){
+					el.data('animated',false);
+					options.callback(el);
+					return;
+				}
+				for(i=Math.max(start,0); i < len; i++){
+					if( i < start+options.step){
+						strCopy[letters[i]] = randomChar(types[letters[i]]);
+					}else {
+						strCopy[letters[i]] = "";
+					}
+				}
+				el.text(strCopy.join(""));
+				setTimeout(function(){shuffle(start+1);},1000/options.fps);
+			})(-options.step);
+		});
+	};
+	function randomChar(type){
+		var pool = "";
+		if (type == "lowerLetter"){
+			pool = "abcdefghijklmnopqrstuvwxyz0123456789";
+		}else if (type == "upperLetter"){
+			pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		}else if (type == "symbol"){
+			pool = ",.?/\\(^)![]{}*&^%$#'\"";
+		}
+		var arr = pool.split('');
+		return arr[Math.floor(Math.random()*arr.length)];
+	}
     function record(msg){
         $.ajax({
             url: "/record",
@@ -44,7 +117,7 @@ $(function(){
                     '<div class="blog-timeline-box">',
                         '<div class="blog-timeline-wrapper">',
                             '<div class="blog-timeline-spin">',
-                                '<img src="/static/img/hex.png">',
+                                '<img src="/static/img/head_' + generateRadomInt(5) + '.png">',
                             '</div>',
                             '<div class="blog-timeline-time">' +
                                 '<span class="blog-timeline-content">' + article.create_time + '</span>' +
@@ -101,7 +174,7 @@ $(function(){
                 '<div class="detail-paper">',
                     '<div class="detail-header">',
                         '<div class="detail-article-close"><i class="fa fa-times" aria-hidden="true"></i></div>',
-                        '<div class="detail-article-return"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>',
+                        '<div class="detail-article-return"><i class="fa fa-minus" aria-hidden="true"></i></div>',
                         '<div class="detail-article-title">' + article.title + '</div>',
                     '</div>',
                     '<div class="detail-content">' + marked(article.content) + '</div>',

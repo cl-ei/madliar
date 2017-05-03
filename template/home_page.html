@@ -8,7 +8,8 @@
     <meta name="MobileOptimized" content="360" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="{{ page.get('description') }}">
-    <meta name="author" content="{{ page.get('description') }}">
+    <meta name="keywords" content="{{ page.get('keywords') }}"/>
+    <meta name="author" content="{{ page.get('author') }}">
 
     <link rel="icon" href="/static/img/favicon.png">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
@@ -65,9 +66,7 @@
 
         <div id="about-sub-page" class="about-container" style="display: none">
             <img class="head-background-img" src="/static/img/head-bg.jpg">
-            <div id="head-img-container">
-                <img class="head-img" src="/static/img/head.jpg">
-            </div>
+            <div id="head-img-container"><img class="head-img" src="/static/img/head.jpg"></div>
             <h4>疯人&nbsp·&nbspCL</h4>
             <div id="about-text">
                 <h2>关于&nbsp·&nbspMADL!AR</h2>
@@ -76,7 +75,7 @@
                     欢迎请给我发邮件：<br />i#caoliang.net。
                 </p>
                 <br />
-                <h2>优秀博客推荐：</h2>
+                <h2>优秀博客推荐</h2>
                 <ul>
                     <li><a target="_blank" href="http://wangyu.name/">即刻出发</a></li>
                     <li><a target="_blank" href="https://mozillazg.github.io/">mozillazg</a></li>
@@ -85,7 +84,7 @@
                 </ul>
                 <br>
                 <h2>博客结构</h2>
-                <p>这个博客是运行在一个自制的基于Python语言的WSGI后端框架上。如果你感兴趣，肯定会发现这个博客只有一个页面。
+                <p>这个博客运行在一个自制的基于Python语言的WSGI后端框架上。如果你感兴趣，肯定会发现这个博客只有一个页面。
                     所有的文章都存放在一个以64位随机字符串命名的js文件当中，通过JavaScript来处理交互逻辑。这也就意味着只需要加载一次，
                     就可以在离线的情况下浏览全站的内容。
                 </p>
@@ -94,8 +93,8 @@
                     博客基于markdown语言，使用了Christopher Jeffrey的md转html的js插件，在此声明。
                     前端的样式主要参照了两个网站，其一是<a target="_blank" href="http://www.jsonmedia.com">镜尚传媒的官网</a>，
                     当时其官网尚在筹备当中；其二是<a target="_blank" href="https://blog.coding.net/">码市</a>的博客：
-                    <img style="width: 100%" src="/static/img/jsonmedia.png"/>
-                    <img style="width: 100%" src="/static/img/coding.png"/>
+                    <img style="width: 100%" src="/static/img/jsonmedia.jpg"/>
+                    <img style="width: 100%" src="/static/img/coding.jpg"/>
                     特此声明。
                 </p>
             </div>
@@ -104,10 +103,9 @@
     <img id="background" src=""/>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/jquery.shuffleLetters.js"></script>
-    <script type="text/javascript" src="/static/js/marked.js"></script>
+    <script src="/static/js/marked.js"></script>
+    <script src="/static/js/rainyday.js"></script>
     <script src="{{ article_js }}"></script>
     <script src="/static/blog/js/mHdwTj0ItvA57e3a9B.js"></script>
-    <script src="/static/js/rainyday.js"></script>
 </body>
 </html>

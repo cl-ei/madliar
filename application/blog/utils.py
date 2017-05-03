@@ -36,7 +36,7 @@ class ArticleParser(object):
         m = re.match(r"^-{3,}([\s\S]*)", self.content)
         if m:
             content = m.groups()[0]
-            self.header, self.body = re.split(r"-{3,}\n", content, maxsplit=1)
+            self.header, self.body = re.split(r"-{3,}\r?\n", content, maxsplit=1)
 
     def __parse_header(self):
         for line in self.header.split("\n"):
