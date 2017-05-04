@@ -780,10 +780,6 @@ canvas{
         padding-left: 10px;
         padding-right: 10px;
     }
-    .detail-content p, .detail-content ul{
-        padding-left: 20px;
-        padding-right: 20px;
-    }
 }
 @media (max-width: 767px) {
     #detail-sub-page{
@@ -914,10 +910,6 @@ canvas{
     .blog-concise-content{
         padding: 0 20px 0 20px;
     }
-    .detail-content p, .detail-content ul{
-        padding-left: 10px;
-        padding-right: 10px;
-    }
 }
 @media (max-width:480px){
     #list-view-sub, #detail-sub-page{
@@ -978,10 +970,6 @@ canvas{
     .blog-concise-content{
         padding: 0 10px 0 10px;
     }
-    .detail-content p, .detail-content ul{
-        padding-left: 0;
-        padding-right: 0;
-    }
 }
 @media (max-width:400px){
     section{
@@ -1005,7 +993,7 @@ canvas{
         margin-top: 100px;
         padding: 20px 10px 0px 10px;
     }
-    .detail-content, .detail-content p, .detail-content ul{
+    .detail-content{
         padding-left: 0;
         padding-right: 0;
     }

@@ -200,14 +200,14 @@ $(function(){
     function onBackToHome(){
         if (window.history && window.history.pushState) {
             $(window).on('popstate', function () {
-                window.history.pushState('forward', null, '#');
+                window.history.pushState('forward', null, '');
                 window.history.forward(1);
                 return $("#detail-sub-page:visible").length > 0
                     ? showHomePage()
                     : null;
             });
         }
-        window.history.pushState('forward', null, '#');
+        window.history.pushState('forward', null, '');
         window.history.forward(1);
     }
     function showHomePage(){
