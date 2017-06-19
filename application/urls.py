@@ -1,9 +1,12 @@
 from application.blog.urls import url as blog_url_map
 from application.blog.views import home_page, favicon_response, record
+from application.api.views import handler
+
 
 url = {
     "^/$": home_page,
     "^/favicon.ico/?$": favicon_response,
     "^/blog": blog_url_map,
-    "^/record/?$": record
+    "^/record/?$": record,
+    "^/api": handler,
 }
