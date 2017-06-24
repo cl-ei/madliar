@@ -4,6 +4,7 @@ __all__ = (
     "POST_ARTICLE_PATH",
     "PARSED_ARTICLE_JSON",
     "STATICS_URL_MAP",
+    "MUSIC_FOLDER",
 )
 
 # email config
@@ -21,4 +22,7 @@ PARSED_ARTICLE_JSON = "static/blog/js/article"
 STATICS_URL_MAP = {
     "^/statics": "application/blog/static",
     "^/static": "static",
+    "^/music_file": "music",
 }
+
+MUSIC_FOLDER = "./music/"

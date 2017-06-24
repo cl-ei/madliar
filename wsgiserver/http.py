@@ -5,6 +5,7 @@ STATICS_FILE_MIME_TYPE = (
     (("png", "jpg", "jpeg", "gif"), "image", None),
     (("js", "woff"), "application", ("javascript", "x-font-woff")),
     (("css", ), "text", None),
+    (("mp3", "wav", ), "audio/mpeg", None),
 )
 
 
