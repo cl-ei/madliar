@@ -27,7 +27,7 @@ def handler(request):
         url = request.path[5:]
         with open("url.txt", "w") as f:
             f.write(url)
-        os.system(close_chrome)
+        # os.system(close_chrome)
         return HttpResponse("Closed")
 
 
@@ -72,3 +72,8 @@ def get_music_download_url(song_id):
         return url
     except IOError:
         return ""
+
+
+def route_parser(request, *args, **kwargs):
+    print "get -> ", args, kwargs
+    return HttpResponse("OK")
