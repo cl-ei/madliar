@@ -54,7 +54,9 @@ class BaseResponse(object):
 class HttpResponse(BaseResponse):
     def __init__(self, *args, **kwargs):
         BaseResponse.__init__(self, *args, **kwargs)
-        content = kwargs.get("content", str(args[0]))
+        content = kwargs.get("content", args[0])
+        if type(content) == unicode:
+            content = content.encode("utf-8")
         if type(content) in (bytes, str):
             self.content = content
 
