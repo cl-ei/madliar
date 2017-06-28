@@ -21,8 +21,8 @@ def home_page(request):
         "article_js": article_js,
         "page": {
             "author": "CL",
-            "description": "CL，编程爱好者，这是CL的官方博客，记录生活感悟和学习点滴。",
-            "keywords": "MADLIAR, CL, CL's 疯言疯语, 疯言疯语, 风言风语, CL博客",
+            "description": u"CL，编程爱好者，这是CL的官方博客，记录生活感悟和学习点滴。",
+            "keywords": u"MADLIAR, CL, CL's 疯言疯语, 疯言疯语, 风言风语, CL博客",
         },
     }
     return render(
