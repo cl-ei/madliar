@@ -19,28 +19,16 @@ $(function(){
         musicFileFolder = "/music_file/",
         hxjjImgLocation = "url('/static/music/friend_link/hxjj.jpg')";
 
-
     function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
+        window.localStorage.setItem(cname, cvalue)
     }
     function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0; i<ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1);
-            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
-        }
-        return "";
+        return window.localStorage.getItem(cname) || "";
     }
     function obvious(){
         document.getElementById("btn_play").style.cursor="pointer";
         $("#btn_play").animate({opacity:'0.7'},200);
     }
-
     function unobvious(){
         $("#btn_play").animate({opacity:'1'},300);
     }
@@ -172,13 +160,11 @@ $(function(){
     }
     function play_by_list(the_song){
         play_access(the_song.id.substr("music_list_".length));
-    };
-
+    }
     function play_next(){
         var song_index = (current_song + 1)%(lst_cnt);
         play_access(song_index);
-    };
-
+    }
     function play_access(index,time){
         if(!arguments[1]){time = 0;}
         index = Number(index);
@@ -206,8 +192,7 @@ $(function(){
         player_status = "play";
 
         setCookie("player_index",Number(current_song),30);
-    };
-
+    }
     function generate_music_list_dom(){
         for (i in music_list) {
             $('<a/>', {
@@ -217,7 +202,7 @@ $(function(){
             }).appendTo($('#msc_list'));
             $('<br />').appendTo($('#msc_list'));
         }
-    };
+    }
     function friend_link_server(){
         if (frend_link_status == false){
             frend_link_status = true;
@@ -266,12 +251,10 @@ $(function(){
 
     /* global variables init */
     lst_cnt = music_list.length;
-
     /* Dom init */
     generate_music_list_dom();
     $("body").fadeIn(500);
     pgsblock_pos_x = Number($("#pgs_block").offset().left);
-
     /* bind event */
     document.getElementById("pgs_block").addEventListener('touchmove', function(event) {
         if (event.targetTouches.length == 1) {
@@ -289,7 +272,6 @@ $(function(){
             document.getElementById("pgs_block").style.left = offset + "px";         
         }
     }, false);
-
     $("#btn_play").bind("mouseover",function(){obvious();}).bind("mouseout",function(){unobvious();}).bind("click",function(){toggle_play();});
     $("#pgs_block").bind("mouseover",function(){$("#pgs_block").css("cursor","pointer");}).draggable({ containment: "parent" }).mousedown(function(){move_pgsblock();});
     $("#music_play_next_btn").click(function(){play_next();});
@@ -303,7 +285,7 @@ $(function(){
 
     player_status = getCookie("player_status");
     if(player_status == ""){
-        setCookie("player_index","play",30);
+        setCookie("player_status","play",30);
         player_status = "play";
     }
     var time = getCookie("player_time");
@@ -313,7 +295,7 @@ $(function(){
     }
     var index = getCookie("player_index");
     if(index == ""){
-        setCookie("player_index",0,30);
+        setCookie("player_index", 0, 30);
         index = 0;
     }
 

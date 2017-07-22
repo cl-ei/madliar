@@ -1,3 +1,6 @@
+import os
+
+
 __all__ = (
     "DEBUG",
     "PROJECT_ROOT",
@@ -13,7 +16,7 @@ mail_user = 'i@caoliang.net'
 mail_pass = '000000'
 sender = 'i@caoliang.net'
 
-DEBUG = True
+DEBUG = True if os.name in ["nt", ] else False
 
 PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/madliar"
 POST_ARTICLE_PATH = "template/_post/article"
