@@ -1,0 +1,43 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+body{
+    min-width: 360px;
+    margin: auto;
+    color: #444;
+    font-family: "Microsoft YaHei UI", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+}
+a{
+    color: #3F3F3F;
+    text-decoration: none;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all 0.3s ease-out;
+}
+a:hover{
+    border-bottom: 1px solid #777;
+}
+
+#nav{
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+    line-height: 50px;
+    margin-bottom: 20px;
+    padding-left: 30px;
+}
+.left-nav{
+    display: block;
+    float: left;
+    width: 400px;
+}
+.right-nav{
+    display: block;
+    float: right;
+    margin-right: 15px;
+}
