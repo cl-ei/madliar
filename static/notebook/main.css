@@ -5,12 +5,12 @@ html, body{
     width: 100%;
 }
 body{
-    min-width: 360px;
     margin: auto;
     color: #444;
     font-family: "Microsoft YaHei UI", "WenQuanYi Micro Hei", SimSun, sans-serif;
     -webkit-font-smoothing: antialiased;
     font-size: 14px;
+    outline: none;
 }
 a{
     color: #3F3F3F;
@@ -19,17 +19,24 @@ a{
     -moz-transition: all .3s ease-out;
     -o-transition: all .3s ease-out;
     transition: all 0.3s ease-out;
+    outline: none;
 }
 a:hover{
     border-bottom: 1px solid #777;
 }
-
-#nav{
-    height: 50px;
-    border-bottom: 1px solid #ccc;
-    line-height: 50px;
-    margin-bottom: 20px;
-    padding-left: 30px;
+a:focus, a:hover{
+    text-decoration: none !important;
+}
+input{
+    border: none;
+    border-bottom: 1px solid #888;
+    line-height: 1.7em;
+    text-align: left;
+    padding-left: 10px;
+    outline: none;
+}
+.modal-content{
+    border-radius: 0;
 }
 .left-nav{
     display: block;
@@ -40,4 +47,98 @@ a:hover{
     display: block;
     float: right;
     margin-right: 15px;
+}
+.button{
+    border: none;
+    background: #ccc;
+    padding: 6px 12px;
+    margin-top: 15px;
+    outline: none;
+    transition: all 0.3s ease-out;
+}
+.button:hover{
+    background: #333;
+    color: whitesmoke;
+}
+#nav{
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+    line-height: 50px;
+    padding-left: 30px;
+}
+#input-area textarea{
+    height: 100%;
+    width: 100%;
+    border: none;
+    resize: none;
+    line-height: 1.6em;
+    outline: none;
+    padding: 30px;
+}
+#content-area{
+    background: white;
+    float: left;
+    height: calc(100% - 46px);
+    width: calc(50% - 70px);
+    overflow: auto;
+    margin: 22px 20px 0 0;
+    padding: 15px;
+    word-wrap: break-word;
+    box-shadow: 4px 4px 20px 0 rgba(0, 0, 0, 0.15);
+}
+#uavaliable-mask{
+    display: none;
+    text-align: center;
+    padding-top: 50%;
+}
+#upload-file-form{
+    display: none;
+}
+#folder-tree{
+    display: block;
+    height: fit-content;
+    float: left;
+    overflow: auto;
+    margin: 20px 10px 0 0;
+}
+#input-area{
+    float: left;
+    width: 50%;
+    margin: 22px 20px 0 0;
+    height: calc(100% - 20px);
+    box-shadow: -4px 5px 20px 7px rgba(0, 0, 0, 0.15);
+}
+#nav a{
+    margin-right: 15px;
+}
+#content{
+    background-color: #f3f3f3;
+    height: calc(100% - 51px);
+    overflow: hidden;
+}
+#sub-content{
+    float: right;
+    height: calc(100% - 20px);
+}
+
+@media (max-width: 9999px) {
+    #folder-tree {
+        width: 220px;
+    }
+    #sub-content{
+        width: calc(100% - 230px);
+    }
+}
+@media (max-width: 900px) {
+    #folder-tree {
+        width: 130px;
+    }
+    #sub-content{
+        width: calc(100% - 140px);
+    }
+}
+@media (max-width: 600px) {
+    #folder-tree {
+        width: 0;
+    }
 }

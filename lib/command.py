@@ -30,3 +30,6 @@ def load_article(*args, **kwargs):
     from application.blog.utils import generate_cached_article_json
     return generate_cached_article_json(*args, **kwargs)
 
+
+def shell(*args, **kwargs):
+    os.system("ipython")
