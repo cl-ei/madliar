@@ -30,7 +30,3 @@ def home_page(request):
         context=context
     )
 
-
-def record(request):
-    # TODO: add ...
-    return HttpResponse(json.dumps({"err_code": 0}), content_type="application/json")
