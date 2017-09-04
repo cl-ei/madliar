@@ -22,44 +22,23 @@
     <script type="text/javascript" src="/static/js/jstree.min.js"></script>
     <script type="text/javascript" src="/static/js/marked.js"></script>
     <script type="text/javascript" src="/static/notebook/main.js"></script>
+    <style>
+        .user-name{
+            margin-right: 20px;
+        }
+        .jstree-hovered{
+            background-color: #696969 !important;
+            text-decoration: none !important;
+            border-bottom: none !important;
+            color: white !important;
+        }
+        .modal-header h4{
+            margin:auto;
+            text-align: center;
+        }
+    </style>
     <script>
         window.loginInfo = {% if login_info %}login_info{% else %}false{% endif %};
-    </script>
-    <script>
-        function windowSizeMonitor(){
-            if(document.documentElement.clientWidth < 605){
-                $("#nav, #content").css({"display": "none"});
-                $("#uavaliable-mask").css({"display": "block"});
-            }else{
-                $("#nav, #content").css({"display": "block"});
-                $("#uavaliable-mask").css({"display": "none"});
-            }
-        }
-        function getAndRenderDefaultPage(){
-
-        }
-        function renderNav(){
-            if (window.loginInfo){
-
-            }else{
-                var navHtml = [
-                    '<a href="javascript:void(0)" id="login" ><i class="fa fa-sign-in" aria-hidden="true"></i> 登录</a>',
-                    '<a href="javascript:void(0)" id="register" ><i class="fa fa-table" aria-hidden="true"></i> 注册</a>'
-                ].join("");
-                $(".right-nav").html(navHtml);
-                $("#login").click(function(){
-                    $("#login-btn").data("act", "login");
-                    $("#login-modal").modal("show");
-                }).next().click(function(){
-                    $("#login-btn").data("act", "regist");
-                    $("#login-modal").modal("show");
-                })
-            }
-        }
-        $(window).resize(windowSizeMonitor).on("ready", windowSizeMonitor);
-        $(function(){
-            renderNav();
-        });
     </script>
     <script>
         $(function(){
@@ -104,12 +83,6 @@
         <div class="left-nav">
             <a href="/"><i class="fa fa-home" aria-hidden="true"></i> 首页</a>
             <span id="top-dynamic-nav"></span>
-            <!--<a href="#" id="file-upload-btn" ><i class="fa fa-file-image-o" aria-hidden="true"></i> 插入</a>-->
-            <!--<a href="#" id="save-btn"><i class="fa fa-save" aria-hidden="true"></i> 保存</a>-->
-
-            <!--<span id="prompt-save"></span>-->
-            <!--<span id="prompt-saving" style="display:none"><i class="fa fa-spinner fa-spin fa-fw"></i></span>-->
-            <!--<span id="prompt-saved" style="display:none"><i class="fa fa-check" aria-hidden="true"></i></span>-->
         </div>
         <div class="right-nav"></div>
     </div>
@@ -118,28 +91,26 @@
         <div id="sub-content">
             <div id="input-area"><textarea id="input-text-area" type="text" name="detail"></textarea></div>
             <div id="content-area">
-            content-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-area
+                <div id="content-text">
+                    content-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-areacontent-area
+                </div>
         </div>
         </div>
     </div>
-    <div class="modal fade" id="prompt-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 style="margin:auto;text-align: center;" id="modal-title"></h4>
-                </div>
-                <div class="modal-body" id="modal-content"></div>
-            </div>
-        </div>
+
+    <div class="cl-prompt">
+        <div class="cl-prompt-close">X</div>
+        <div class="cl-prompt-header"><h4 id="cl-prompt-title"></h4></div>
+        <div class="cl-prompt-body"><p id="cl-prompt-content"></p></div>
     </div>
     <div class="modal fade" id="login-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 style="margin:auto;text-align: center;">注册或登录</h4>
+                    <h4 id="login-or-regist"></h4>
                 </div>
                 <div class="modal-body" style="text-align: center;">
-                    <p>*注册或登录。</p>
+                    <p>*请键入正确的邮箱。</p>
                     <div>
                         <label>邮箱: <input class="redinput" type="text" name="email"/></label>
                     </div>

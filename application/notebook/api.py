@@ -23,7 +23,7 @@ class supported_action(object):
 
 
 def handler(request):
-    if request.method.lower != "POST":
+    if request.method.lower() != "post":
         return HttpResponse(
             json.dumps({"err_code": 403, "err_msg": "Only POST method supported."}),
             content_type="application/json"
