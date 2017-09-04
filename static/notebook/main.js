@@ -46,7 +46,7 @@ function login(){
             console.log(data);
         },
         error: function(e){
-            popupMessage(e);
+            popupMessage("操作失败，请检查你的网络连接。");
         }
     })
 }
