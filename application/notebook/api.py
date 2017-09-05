@@ -1,4 +1,6 @@
+# -*- coding:utf-8 -*-
 import json
+import re
 from wsgiserver.http import HttpResponse
 from application.notebook import dao
 
@@ -43,13 +45,62 @@ def handler(request):
 @supported_action(action="login")
 def login(request):
     email = request.POST.get("email")
-    password = request.POST.get("password")
-    # TODO: check
+    password = request.POST.get("password", "")
+    email_pattern = re.compile(r"^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$")
+    if not email_pattern.match(email):
+        response = {
+            "err_code": 403,
+            "err_msg": u"错误的邮箱。"
+        }
+        return HttpResponse(json.dumps(response), content_type="application/json")
+
+    if not 5 < len(password) < 48:
+        response = {
+            "err_code": 403,
+            "err_msg": u"密码过长或过短。"
+        }
+        return HttpResponse(json.dumps(response), content_type="application/json")
 
     result, token = dao.login(email=email, password=password)
     response = {
         "err_code": 0 if isinstance(token, (str, unicode)) and len(token) == 64 else 403,
-        "token" if result else "err_msg": token
+        "token" if result else "err_msg": token,
+        "email": email,
     }
-
     return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+@supported_action(action="regist")
+def regist(request):
+    email = request.POST.get("email")
+    password = request.POST.get("password", "")
+    email_pattern = re.compile(r"^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$")
+    if not email_pattern.match(email):
+        response = {
+            "err_code": 403,
+            "err_msg": u"错误的邮箱。"
+        }
+        return HttpResponse(json.dumps(response), content_type="application/json")
+
+    if not 5 < len(password) < 48:
+        response = {
+            "err_code": 403,
+            "err_msg": u"密码过长或过短。"
+        }
+        return HttpResponse(json.dumps(response), content_type="application/json")
+
+    result, token = dao.regist(email, password)
+    response = {
+        "err_code": 0 if isinstance(token, (str, unicode)) and len(token) == 64 else 403,
+        "token" if result else "err_msg": token,
+        "email": email,
+    }
+    return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+@supported_action(action="logout")
+def logout(request):
+    email = request.COOKIES.get("email")
+    if email:
+        dao.logout(email)
+    return HttpResponse(json.dumps({"err_code": 0}), content_type="application/json")

@@ -1,3 +1,23 @@
+function setCookie(key, value, expiredays){
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = key + "=" + encodeURI(value)
+        + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+}
+function getCookie(key) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+             var cookie = jQuery.trim(cookies[i]);
+             if (cookie.substring(0, key.length + 1) == (key + '=')) {
+                 cookieValue = decodeURIComponent(cookie.substring(key.length + 1));
+                 break;
+             }
+         }
+    }
+    return cookieValue;
+}
 function windowSizeMonitor(){
     if(document.documentElement.clientWidth < 605){
         $("#nav, #content").css({"display": "none"});
@@ -23,6 +43,16 @@ function popupMessage(msg, title){
 function clearMessage(){
     $(".cl-prompt").css({"opacity": "0", "top": "0px", "z-index": "-10"});
 }
+function onLoginOrRegisted(data){
+    if(data.err_code != 0){
+        var msg = "操作失败。详细信息：" + data.err_msg;
+        popupMessage(msg);
+        return ;
+    }
+    setCookie("madToken", data.token);
+    setCookie("email", data.email);
+    window.location.reload();
+}
 function login(){
     var email = $("input[name=email]").val(),
         password = $("input[name=password]").val();
@@ -34,8 +64,22 @@ function login(){
         url: "/notebook/api",
         type: "post",
         data: {
+            action: "login",
             email: email,
             password: password
+        },
+        success: onLoginOrRegisted,
+        error: function(e){
+            popupMessage("操作失败，请检查你的网络连接。");
+        }
+    })
+}
+function logout(){
+    $.ajax({
+        url: "/notebook/api",
+        type: "post",
+        data: {
+            action: "logout"
         },
         success: function(data){
             if(data.err_code != 0){
@@ -43,18 +87,33 @@ function login(){
                 popupMessage(msg);
                 return ;
             }
-            console.log(data);
+            window.location.reload()
         },
         error: function(e){
             popupMessage("操作失败，请检查你的网络连接。");
         }
     })
 }
-function logout(){
-
-}
 function regist(){
-    console.log(1234)
+    var email = $("input[name=email]").val(),
+        password = $("input[name=password]").val();
+    if(email.length < 1 || password.length > 32 || password.length < 5){
+        window.popupMessage("请输入正确的邮箱和密码。");
+        return ;
+    }
+    $.ajax({
+        url: "/notebook/api",
+        type: "post",
+        data: {
+            action: "regist",
+            email: email,
+            password: password
+        },
+        success: onLoginOrRegisted,
+        error: function(e){
+            popupMessage("操作失败，请检查你的网络连接。");
+        }
+    })
 }
 function renderLoginPage(){
     var navHtml = [

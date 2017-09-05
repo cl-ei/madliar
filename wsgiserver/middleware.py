@@ -64,7 +64,8 @@ class WSGIRequest(object):
         for pair in pairs:
             m = QUERY_STRING_PATTERN.match(pair)
             if m:
-                query[m.group(1)] = m.group(2)
+                unquote_value = cgi.urlparse.unquote(m.group(2))
+                query[m.group(1)] = unquote_value
         return query
 
     @cached_property

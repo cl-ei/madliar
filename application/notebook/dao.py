@@ -52,7 +52,7 @@ def check_regist_limit(email):
     if existed_registed_user_cnt > 500:
         return False
 
-    s.lpush(email)
+    s.lpush(login_key, email)
     if existed_registed_user_cnt == 0:
         s.expire(login_key, 3600 * 24)
 
@@ -114,3 +114,19 @@ def logout(email):
     else:
         s.delete()
     return True, u""
+
+
+def check_login(email, token):
+    user_key = "USER_%s" % email
+    s = RedisKeyToJSON(user_key)
+    user_info = s.read()
+    user_token = user_info.get("token")
+    if token != user_token:
+        return False
+
+    expire_time = user_info.get("expire_time")
+    if not expire_time:
+        return False
+
+    now = int(time.time())
+    return now < expire_time

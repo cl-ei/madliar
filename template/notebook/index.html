@@ -25,7 +25,7 @@
 
     </style>
     <script>
-        window.loginInfo = {% if login_info %}login_info{% else %}false{% endif %};
+        window.loginInfo = {% if login_info %}{{ login_info }}{% else %}false{% endif %};
     </script>
     <script>
         $(function(){
