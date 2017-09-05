@@ -60,6 +60,42 @@ input{
     background: #333;
     color: whitesmoke;
 }
+.user-name{
+    margin-right: 20px;
+}
+.modal-header h4{
+    margin:auto;
+    text-align: center;
+}
+.cl-prompt{
+    width: 500px;
+    position: fixed;
+    top: 0;
+    box-shadow: 3px 5px 18px 3px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    margin-left: calc(50% - 250px);
+    border: 1px solid #eee;
+    padding: 15px;
+    opacity: 0;
+    transition: top 0.3s linear 0s, opacity 0.1s;
+}
+.cl-prompt-close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 22px;
+    background: #dfdfdf;
+    font-size: 16px;
+    padding-left: 6px;
+    color: black;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: color 0.2s linear 0s, background 0.2s linear 0s;
+}
+.cl-prompt-close:hover{
+    color: white;
+    background: #555;
+}
 #nav{
     height: 50px;
     border-bottom: 1px solid #ccc;
@@ -124,35 +160,6 @@ input{
 #sub-content{
     float: right;
     height: calc(100% - 20px);
-}
-.cl-prompt{
-    width: 500px;
-    position: fixed;
-    top: 0;
-    box-shadow: 3px 5px 18px 3px rgba(0, 0, 0, 0.15);
-    background: #fff;
-    margin-left: calc(50% - 250px);
-    border: 1px solid #eee;
-    padding: 15px;
-    opacity: 0;
-    transition: top 0.3s linear 0s, opacity 0.1s;
-}
-.cl-prompt-close{
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 22px;
-    background: #dfdfdf;
-    font-size: 16px;
-    padding-left: 6px;
-    color: black;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: color 0.2s linear 0s, background 0.2s linear 0s;
-}
-.cl-prompt-close:hover{
-    color: white;
-    background: #555;
 }
 @media (max-width: 9999px) {
     #folder-tree {
