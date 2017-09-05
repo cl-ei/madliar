@@ -8,6 +8,7 @@ __all__ = (
     "PARSED_ARTICLE_JSON",
     "STATICS_URL_MAP",
     "MUSIC_FOLDER",
+    "REDIS_CONFIG",
 )
 
 # email config
@@ -29,3 +30,7 @@ STATICS_URL_MAP = {
 }
 
 MUSIC_FOLDER = "./music/"
+
+REDIS_CONFIG = {
+    
+}
