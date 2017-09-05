@@ -49,14 +49,14 @@ def check_regist_limit(email):
     login_key = "REG_%s" % now_time_str
 
     existed_registed_user_cnt = s.llen(login_key)
-    if existed_registed_user_cnt < 1:
-        s.expire(login_key, 3600*24)
-
-    if existed_registed_user_cnt < 500:
-        s.lpush(email)
-        return True
-    else:
+    if existed_registed_user_cnt > 500:
         return False
+
+    s.lpush(email)
+    if existed_registed_user_cnt == 0:
+        s.expire(login_key, 3600 * 24)
+
+    return True
 
 
 def login(email, password):
