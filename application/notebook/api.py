@@ -1,5 +1,6 @@
 import json
 from wsgiserver.http import HttpResponse
+from application.notebook import dao
 
 
 class supported_action(object):
@@ -37,3 +38,18 @@ def handler(request):
             json.dumps({"err_code": 404, "err_msg": "Action(%s) is not supported." % action}),
             content_type="application/json"
         )
+
+
+@supported_action(action="login")
+def login(request):
+    email = request.POST.get("email")
+    password = request.POST.get("password")
+    # TODO: check
+
+    result, token = dao.login(email=email, password=password)
+    response = {
+        "err_code": 0 if isinstance(token, (str, unicode)) and len(token) == 64 else 403,
+        "token" if result else "err_msg": token
+    }
+
+    return HttpResponse(json.dumps(response), content_type="application/json")
