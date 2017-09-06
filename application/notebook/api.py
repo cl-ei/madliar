@@ -27,17 +27,17 @@ class supported_action(object):
 
 def handler(request):
     if request.method.lower() != "post":
-        return HttpResponse(
-            json.dumps({"err_code": 403, "err_msg": "Only POST method supported."}),
-            content_type="application/json"
-        )
-
+        response = {"err_code": 403, "err_msg": "Only POST method supported."}
+        return HttpResponse(json.dumps(response), content_type="application/json")
+    
     action = request.POST.get("action")
     try:
-        return supported_action.run(action, request)
+        http_response = supported_action.run(action, request)
     except supported_action.ActionDoesNotExisted:
         respose = {"err_code": 404, "err_msg": "Action(%s) is not supported." % action}
-        return HttpResponse(json.dumps(respose), content_type="application/json")
+        http_response = HttpResponse(json.dumps(respose), content_type="application/json")
+
+    return http_response
 
 
 @supported_action(action="login")
