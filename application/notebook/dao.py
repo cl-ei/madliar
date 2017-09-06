@@ -45,7 +45,7 @@ class RedisKeyToJSON(object):
 
 def check_regist_limit(email):
     s = redis.Redis(host='localhost', port=6379, db=8)
-    now_time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    now_time_str = time.strftime("%Y-%m-%d", time.localtime())
     login_key = "REG_%s" % now_time_str
 
     existed_registed_user_cnt = s.llen(login_key)
