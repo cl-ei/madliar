@@ -21,9 +21,10 @@
     <script type="text/javascript" src="/static/js/jstree.min.js"></script>
     <script type="text/javascript" src="/static/js/marked.js"></script>
     <script type="text/javascript" src="/static/notebook/main.js"></script>
-    <style>
-
-    </style>
+    <script>
+        window.contextData = {};
+        window.contextData.loginInfo = {% if login_info %}{{ login_info }}{% else %}false{% endif %};
+    </script>
     <script>
         $(function(){
             $('#jstree').jstree({
@@ -109,6 +110,5 @@
     <form id="upload-file-form">
         <input type="file" id="file-input" name="file"/>上传
     </form>
-<script>$.cl.contextData = {loginInfo: {% if login_info %}{{ login_info }}{% else %}false{% endif %}};$(window).resize($.cl.windowSizeMonitor).on("ready", $.cl.windowSizeMonitor);$(function(){return window.loginInfo && window.loginInfo.email ? $.cl.renderLoginPage() : $.cl.renderUnloginPage();});</script>
 </body>
 </html>

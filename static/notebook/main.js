@@ -52,7 +52,7 @@ $.cl = {
         }
         $.cl.setCookie("madToken", data.token);
         $.cl.setCookie("email", data.email);
-        $.cl.contextData.loginInfo = {
+        window.contextData.loginInfo = {
             email: data.email
         };
         $.cl.renderLoginPage();
@@ -91,7 +91,7 @@ $.cl = {
                     $.cl.popupMessage(msg);
                     return ;
                 }
-                $.cl.contextData.loginInfo = false;
+                window.contextData.loginInfo = false;
                 $.cl.renderUnloginPage();
             },
             error: function(e){
@@ -123,11 +123,11 @@ $.cl = {
     renderLoginPage: function (){
         $.cl.releasePageResource();
         var navHtml = [
-            '<span class="user-name">欢迎回来，' + $.cl.contextData.loginInfo.email + '</span>',
+            '<span class="user-name">欢迎回来，' + window.contextData.loginInfo.email + '</span>',
             '<a href="javascript:void(0)" id="logout" ><i class="fa fa-sign-in" aria-hidden="true"></i> 注销</a>'
         ].join("");
         $(".right-nav").html(navHtml);
-        $("#logout").click($.cl.logout);
+        $("#logout").off("click").click($.cl.logout);
 
         var leftNavHtml = [
             '<a href="javascript:void(0)" id="save-btn"><i class="fa fa-save" aria-hidden="true"></i> 保存</a>'
@@ -144,16 +144,22 @@ $.cl = {
             '<a href="javascript:void(0)" id="register" ><i class="fa fa-table" aria-hidden="true"></i> 注册</a>'
         ].join("");
         $(".right-nav").html(navHtml);
-        $("#login").click(function(){
+        $("#login").off("click").click(function(){
             $("#login-or-regist").html("登录");
             $("#login-modal").modal("show");
-        }).next().click(function(){
+        }).next().off("click").click(function(){
             $("#login-or-regist").html("注册");
             $("#login-modal").modal("show");
         });
-        $("#login-btn").click(function(){
+        $("#login-btn").off("click").click(function(){
             $("#login-modal").modal("hide");
             return $("#login-or-regist").html() === "注册" ? $.cl.regist() : $.cl.login();
         })
+    },
+    initPage: function (){
+        return window.contextData.loginInfo && window.contextData.loginInfo.email
+            ? $.cl.renderLoginPage()
+            : $.cl.renderUnloginPage();
     }
 };
+$(window).resize($.cl.windowSizeMonitor).on("ready", $.cl.windowSizeMonitor);$($.cl.initPage);
