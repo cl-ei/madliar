@@ -1,4 +1,6 @@
 $.cl = {
+    fileIcon: "/static/img/jstree/file.png",
+    folderIcon: "/static/img/jstree/folder.png",
     setCookie: function (key, value, expiredays){
         var exdate=new Date();
         exdate.setDate(exdate.getDate() + expiredays);
@@ -120,6 +122,59 @@ $.cl = {
             }
         })
     },
+    getAndRenderDefaultFileListAndPage: function(){
+        var jstreeInstance = $("#jstree");
+        if (jstreeInstance.jstree()){
+            jstreeInstance.jstree().destroy()
+        }
+        jstreeInstance.jstree({
+            core: {
+                data: [{
+                    text: "游客的文件夹",
+                    state: {opened: true},
+                    children: [{
+                        text: "简介",
+                        type: "file",
+                        state: {opened: true, selected: true}
+                    }]
+                }]
+            },
+            types: {
+                file: {icon: $.cl.fileIcon},
+                foler: {icon: $.cl.folderIcon},
+                default: {icon: $.cl.folderIcon}
+            },
+            plugins: ["types"]
+        });
+        document.getElementById('input-text-area').value = $("#default-file-content").val();
+    },
+    getAndRenderLoginedFileListAndPage: function(){
+        var jstreeInstance = $("#jstree");
+        if (jstreeInstance.jstree()){
+            jstreeInstance.jstree().destroy()
+        }
+        jstreeInstance.jstree({
+            core: {
+                data: {
+                    url: "/notebook/api",
+                    type: "post",
+                    data: function (node) {
+                        return {
+                            id: node.id,
+                            action: "get_file_list"
+                        };
+                    }
+                }
+            },
+            types: {
+                file: {icon: $.cl.fileIcon},
+                foler: {icon: $.cl.folderIcon},
+                default: {icon: $.cl.folderIcon}
+            },
+            plugins: ["types"]
+        });
+        document.getElementById('input-text-area').value = "";
+    },
     renderLoginPage: function (){
         $.cl.releasePageResource();
         var navHtml = [
@@ -133,6 +188,7 @@ $.cl = {
             '<a href="javascript:void(0)" id="save-btn"><i class="fa fa-save" aria-hidden="true"></i> 保存</a>'
         ].join("");
         $("#top-dynamic-nav").html(leftNavHtml);
+        $.cl.getAndRenderLoginedFileListAndPage()
     },
     releasePageResource: function (){
 
@@ -154,12 +210,27 @@ $.cl = {
         $("#login-btn").off("click").click(function(){
             $("#login-modal").modal("hide");
             return $("#login-or-regist").html() === "注册" ? $.cl.regist() : $.cl.login();
-        })
+        });
+        $.cl.getAndRenderDefaultFileListAndPage();
+    },
+    daemonToTransMdId: undefined,
+    oldContent: undefined,
+    daemonToTransMd: function (){
+        return setInterval(function(){
+            var newContent = $("#input-text-area").val();
+            if (newContent !== $.cl.oldContent){
+                $.cl.oldContent = newContent;
+                $("#content-text").html(marked(newContent));
+            }
+        }, 400);
     },
     initPage: function (){
-        return window.contextData.loginInfo && window.contextData.loginInfo.email
-            ? $.cl.renderLoginPage()
-            : $.cl.renderUnloginPage();
+        (window.contextData.loginInfo && window.contextData.loginInfo.email ? $.cl.renderLoginPage : $.cl.renderUnloginPage)();
+        $("input[name=password]").on('keyup', function(e){if(e.key === "Enter"){$("#login-btn").trigger("click")}});
+        if ($.cl.daemonToTransMdId){
+            clearInterval($.cl.daemonToTransMdId);
+        }
+        $.cl.daemonToTransMdId = $.cl.daemonToTransMd();
     }
 };
 $(window).resize($.cl.windowSizeMonitor).on("ready", $.cl.windowSizeMonitor);$($.cl.initPage);

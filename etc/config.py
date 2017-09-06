@@ -9,6 +9,7 @@ __all__ = (
     "STATICS_URL_MAP",
     "MUSIC_FOLDER",
     "REDIS_CONFIG",
+    "APP_NOTE_BOOK_CONFIG",
 )
 
 # email config
@@ -33,4 +34,8 @@ MUSIC_FOLDER = "./music/"
 
 REDIS_CONFIG = {
     
+}
+
+APP_NOTE_BOOK_CONFIG = {
+    "user_root_foler": "/home/wwwroot/notebook"
 }

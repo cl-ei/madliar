@@ -29,3 +29,7 @@
     padding-left:1em;
 }
 /* end for */
+.jstree-themeicon-custom{
+    background-size: 18px !important;
+    background-repeat: no-repeat !important;
+}
