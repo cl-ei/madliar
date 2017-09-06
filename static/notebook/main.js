@@ -51,7 +51,10 @@ function onLoginOrRegisted(data){
     }
     setCookie("madToken", data.token);
     setCookie("email", data.email);
-    window.location.reload();
+    window.loginInfo = {
+        email: data.email
+    };
+    renderLoginPage();
 }
 function login(){
     var email = $("input[name=email]").val(),
@@ -87,7 +90,8 @@ function logout(){
                 popupMessage(msg);
                 return ;
             }
-            window.location.reload()
+            window.loginInfo = false;
+            renderUnloginPage();
         },
         error: function(e){
             popupMessage("操作失败，请检查你的网络连接。");
@@ -116,6 +120,7 @@ function regist(){
     })
 }
 function renderLoginPage(){
+    releasePageResource();
     var navHtml = [
         '<span class="user-name">欢迎回来，' + window.loginInfo.email + '</span>',
         '<a href="javascript:void(0)" id="logout" ><i class="fa fa-sign-in" aria-hidden="true"></i> 注销</a>'
@@ -128,7 +133,11 @@ function renderLoginPage(){
     ].join("");
     $("#top-dynamic-nav").html(leftNavHtml);
 }
+function releasePageResource(){
+
+}
 function renderUnloginPage(){
+    releasePageResource();
     var navHtml = [
         '<a href="javascript:void(0)" id="login" ><i class="fa fa-sign-in" aria-hidden="true"></i> 登录</a>',
         '<a href="javascript:void(0)" id="register" ><i class="fa fa-table" aria-hidden="true"></i> 注册</a>'

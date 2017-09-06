@@ -104,3 +104,26 @@ def logout(request):
     if email:
         dao.logout(email)
     return HttpResponse(json.dumps({"err_code": 0}), content_type="application/json")
+
+
+def login_required(func):
+    def wraped_func(*args, **kwargs):
+        request = args[0] or kwargs.get("request")
+        if not request:
+            raise TypeError("Error param request: %s." % request)
+        mad_token = request.COOKIES.get("madToken")
+        email = request.COOKIES.get("email")
+
+        result = dao.check_login(email, mad_token)
+        if not result:
+            response = {"err_code": 403, "err_msg": u"您的认证已经过期，请重新登录。"}
+            return HttpResponse(json.dumps(response), content_type="application/json")
+        return func(*args, **kwargs)
+    return wraped_func
+
+
+@supported_action(action="get_file_list")
+@login_required
+def get_file_list(request):
+    response = {"err_code": 0, "data": "ok"}
+    return HttpResponse(json.dumps(response), content_type="application/json")
