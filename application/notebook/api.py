@@ -36,10 +36,8 @@ def handler(request):
     try:
         return supported_action.run(action, request)
     except supported_action.ActionDoesNotExisted:
-        return HttpResponse(
-            json.dumps({"err_code": 404, "err_msg": "Action(%s) is not supported." % action}),
-            content_type="application/json"
-        )
+        respose = {"err_code": 404, "err_msg": "Action(%s) is not supported." % action}
+        return HttpResponse(json.dumps(respose), content_type="application/json")
 
 
 @supported_action(action="login")
