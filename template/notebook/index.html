@@ -25,9 +25,6 @@
 
     </style>
     <script>
-        window.loginInfo = {% if login_info %}{{ login_info }}{% else %}false{% endif %};
-    </script>
-    <script>
         $(function(){
             $('#jstree').jstree({
                 'core': {
@@ -112,5 +109,6 @@
     <form id="upload-file-form">
         <input type="file" id="file-input" name="file"/>上传
     </form>
+<script>$.cl.contextData = {loginInfo: {% if login_info %}{{ login_info }}{% else %}false{% endif %}};$(window).resize($.cl.windowSizeMonitor).on("ready", $.cl.windowSizeMonitor);$(function(){return window.loginInfo && window.loginInfo.email ? $.cl.renderLoginPage() : $.cl.renderUnloginPage();});</script>
 </body>
 </html>
