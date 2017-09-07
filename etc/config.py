@@ -5,10 +5,10 @@ __all__ = (
     "DEBUG",
     "LOG_PATH",
     "PROJECT_ROOT",
+    "MUSIC_FOLDER",
     "POST_ARTICLE_PATH",
     "PARSED_ARTICLE_JSON",
     "STATICS_URL_MAP",
-    "MUSIC_FOLDER",
     "REDIS_CONFIG",
     "APP_NOTE_BOOK_CONFIG",
     "EMAIL_CONFIG",
@@ -17,11 +17,13 @@ __all__ = (
 if os.name in ("nt", ):
     DEBUG = True
     LOG_PATH = "."
+    PROJECT_ROOT = "./"
 else:
     DEBUG = False
     LOG_PATH = "/home/wwwroot/log"
+    PROJECT_ROOT = "/home/wwwroot/madliar"
 
-PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/madliar"
+MUSIC_FOLDER = "./music/"
 POST_ARTICLE_PATH = "template/_post/article"
 PARSED_ARTICLE_JSON = "static/blog/js/article"
 
@@ -30,8 +32,6 @@ STATICS_URL_MAP = {
     "^/static": "static",
     "^/music_file": "music",
 }
-
-MUSIC_FOLDER = "./music/"
 
 REDIS_CONFIG = {
     
