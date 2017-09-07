@@ -2,6 +2,6 @@
     <socket>:65501</socket>
     <chdir>/home/wwwroot/madliar</chdir>
     <module>wsgiserver.wsgi</module>
-    <processes>1</processes>
-    <daemonize>uwsgi.log</daemonize>
+    <processes>3</processes>
+    <!--daemonize>uwsgi.log</daemonize-->
 </uwsgi>

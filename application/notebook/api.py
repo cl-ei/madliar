@@ -122,7 +122,6 @@ def get_file_list(request):
         return json_to_response([])
 
     children = os.listdir(path)
-    print "children: %s" % children
     data = []
     for child in children:
         this_node_path = os.path.join(path, child)
@@ -141,3 +140,13 @@ def get_file_list(request):
             })
     return json_to_response(data)
 
+
+def check_path_string_is_avaliable(text):
+    if not isinstance(text, unicode):
+        try:
+            text = text.decode("utf-8")
+            if not isinstance(text, unicode):
+                return False
+        except UnicodeEncodeError:
+            return False
+    return bool(re.match(u"^[a-zA-Z0-9_\u4e00-\u9fa5]+$", text))
