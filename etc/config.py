@@ -49,4 +49,6 @@ EMAIL_CONFIG = {
     "sender": 'i@caoliang.net',
 }
 
-CUSTEM_MIDDLEWARE = ()
+CUSTEM_MIDDLEWARE = (
+    "wsgiserver.middleware.BaseMiddleware",
+)

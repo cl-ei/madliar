@@ -12,13 +12,13 @@ Sample code:
 
 import os
 import re
+from wsgiserver.response import HttpResponse
 
 try:
     from jinja2 import Template
 except ImportError:
 
     from lib.log4 import logger as logging
-    from wsgiserver.response import HttpResponse
 
     __author__ = "mozillazg"
 
@@ -223,6 +223,10 @@ def render(template, context=None, request=None):
         with open(template) as f:
             template_context = f.read()
     except IOError:
-        template_context = "<center><h3>Template Does Not Existed!</h3></center>"
-    template = Template(template_context.decode("utf-8"))
+        template_context = u"<center><h3>Template Does Not Existed!</h3></center>"
+
+    if not isinstance(template_context, unicode):
+        template_context = template_context.decode("utf-8")
+
+    template = Template(template_context)
     return HttpResponse(template.render(context or {}))

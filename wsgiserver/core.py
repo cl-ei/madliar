@@ -29,16 +29,6 @@ def dynamic_import_class(dotted_path):
         )
 
 
-class BaseMiddleware(object):
-    def __init__(self, get_response):
-        # One-time configuration and initialization.
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        return response
-
-
 class BaseHandler(object):
     def __init__(self, *args, **kwargs):
         pass
@@ -46,6 +36,7 @@ class BaseHandler(object):
 
 class WSGIHandler(BaseHandler):
     request_class = WSGIRequest
+    __middleware_chain = None
 
     def __init__(self, *args, **kwargs):
         super(WSGIHandler, self).__init__(*args, **kwargs)
@@ -64,19 +55,32 @@ class WSGIHandler(BaseHandler):
             response = environ['wsgi.file_wrapper'](response.file_to_stream)
         return response
 
-    def _load_middleware(self, request):
-        middleware_classes = [dynamic_import_class(_) for _ in CUSTEM_MIDDLEWARE]
-        pass
+    def _load_middleware(self):
+        if self.__class__.__middleware_chain is None:
+            get_response_func = self.route_distributing
+            for class_path in CUSTEM_MIDDLEWARE:
+                cls = dynamic_import_class(class_path)
+                if callable(cls):
+                    get_response_func = cls(get_response_func).__call__
+            self.__class__.__middleware_chain = get_response_func
 
-    def route_distributing(self, request, url_map=user_url_map):
-        for url, view_func in url_map.items():
-            m = re.match(url, request.route_path)
+    def route_distributing(self, request):
+        search_loop = user_url_map.items()
+        route_path = request.route_path
+        while True:
+            try:
+                url, sub_url_map = search_loop.pop(0)
+            except IndexError:
+                break
+
+            m = re.match(url, route_path)
             if m:
-                if isinstance(view_func, dict):
-                    request.route_path = request.route_path[len(m.group()):] or "/"
-                    return self.route_distributing(request, url_map=view_func)
-                else:
-                    return view_func(request, *m.groups())
+                if callable(sub_url_map):
+                    return sub_url_map(request, *m.groups())
+
+                route_path = route_path[len(m.group()):] or "/"
+                search_loop = sub_url_map.items()
+
         # Not hit
         if DEBUG:
             for url, static_path in STATICS_URL_MAP.items():
@@ -87,8 +91,8 @@ class WSGIHandler(BaseHandler):
         return Http404Response()
 
     def get_response(self, request):
-        self._load_middleware(request)
-        return self.route_distributing(request)
+        self._load_middleware()
+        return self.__class__.__middleware_chain(request)
 
 
 def get_application():
