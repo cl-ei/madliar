@@ -10,7 +10,12 @@ class BaseMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        print request
+        # Code to be executed for each request before
+        # the view (and later middleware) are called.
+
         response = self.get_response(request)
-        print response
+
+        # Code to be executed for each request/response after
+        # the view is called.
+
         return response

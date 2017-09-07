@@ -58,7 +58,7 @@ class WSGIHandler(BaseHandler):
     def _load_middleware(self):
         if self.__class__.__middleware_chain is None:
             get_response_func = self.route_distributing
-            for class_path in CUSTEM_MIDDLEWARE:
+            for class_path in CUSTEM_MIDDLEWARE[::-1]:
                 cls = dynamic_import_class(class_path)
                 if callable(cls):
                     get_response_func = cls(get_response_func).__call__
