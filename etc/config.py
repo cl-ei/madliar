@@ -12,12 +12,12 @@ __all__ = (
     "REDIS_CONFIG",
     "APP_NOTE_BOOK_CONFIG",
     "EMAIL_CONFIG",
-    "CUSTEM_MIDDLEWARE",
+    "CUSTOM_MIDDLEWARE",
 )
 
 if os.name in ("nt", ):
     DEBUG = True
-    LOG_PATH = "."
+    LOG_PATH = "./"
     PROJECT_ROOT = "./"
 else:
     DEBUG = False
@@ -49,6 +49,6 @@ EMAIL_CONFIG = {
     "sender": 'i@caoliang.net',
 }
 
-CUSTEM_MIDDLEWARE = (
+CUSTOM_MIDDLEWARE = (
     "wsgiserver.middleware.BaseMiddleware",
 )

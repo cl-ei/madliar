@@ -4,7 +4,7 @@ from importlib import import_module
 from wsgiref.simple_server import make_server
 from madliar.response import static_files_response, Http404Response
 from madliar.request import WSGIRequest
-from etc.config import DEBUG, STATICS_URL_MAP, CUSTEM_MIDDLEWARE
+from etc.config import DEBUG, STATICS_URL_MAP, CUSTOM_MIDDLEWARE
 from application.urls import url as user_url_map
 
 
@@ -58,7 +58,7 @@ class WSGIHandler(BaseHandler):
     def _load_middleware(self):
         if self.__class__.__middleware_chain is None:
             get_response_func = self.route_distributing
-            for class_path in CUSTEM_MIDDLEWARE[::-1]:
+            for class_path in CUSTOM_MIDDLEWARE[::-1]:
                 cls = dynamic_import_class(class_path)
                 if callable(cls):
                     get_response_func = cls(get_response_func).__call__
