@@ -3,5 +3,5 @@
     <chdir>/home/wwwroot/madliar</chdir>
     <module>wsgiserver.wsgi</module>
     <processes>3</processes>
-    <!--daemonize>uwsgi.log</daemonize-->
+    <daemonize>/home/wwwroot/log/madliar_uwsgi.log</daemonize>
 </uwsgi>

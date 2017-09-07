@@ -3,6 +3,7 @@ import os
 
 __all__ = (
     "DEBUG",
+    "LOG_PATH",
     "PROJECT_ROOT",
     "POST_ARTICLE_PATH",
     "PARSED_ARTICLE_JSON",
@@ -10,15 +11,15 @@ __all__ = (
     "MUSIC_FOLDER",
     "REDIS_CONFIG",
     "APP_NOTE_BOOK_CONFIG",
+    "EMAIL_CONFIG",
 )
 
-# email config
-mail_host = 'smtp.caoliang.net'
-mail_user = 'i@caoliang.net'
-mail_pass = '000000'
-sender = 'i@caoliang.net'
-
-DEBUG = True if os.name in ["nt", ] else False
+if os.name in ("nt", ):
+    DEBUG = True
+    LOG_PATH = "."
+else:
+    DEBUG = False
+    LOG_PATH = "/home/wwwroot/log"
 
 PROJECT_ROOT = "./" if DEBUG else "/home/wwwroot/madliar"
 POST_ARTICLE_PATH = "template/_post/article"
@@ -38,4 +39,11 @@ REDIS_CONFIG = {
 
 APP_NOTE_BOOK_CONFIG = {
     "user_root_foler": "/home/wwwroot/notebook"
+}
+
+EMAIL_CONFIG = {
+    "mail_host": 'smtp.caoliang.net',
+    "mail_user": 'i@caoliang.net',
+    "mail_pass": '000000',
+    "sender": 'i@caoliang.net',
 }
