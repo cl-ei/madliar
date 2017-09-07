@@ -1,4 +1,4 @@
-from wsgiserver.template import render
+from madliar.template import render
 from application.notebook import dao
 
 

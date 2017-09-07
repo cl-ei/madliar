@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
-from wsgiserver.template import render
-from wsgiserver.response import HttpResponse
+from madliar.template import render
+from madliar.response import HttpResponse
 
 from etc.config import PROJECT_ROOT, PARSED_ARTICLE_JSON
 

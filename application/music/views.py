@@ -1,6 +1,6 @@
 import os
 import json
-from wsgiserver.template import render
+from madliar.template import render
 from etc.config import MUSIC_FOLDER
 
 

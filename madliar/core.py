@@ -2,8 +2,8 @@ import re
 
 from importlib import import_module
 from wsgiref.simple_server import make_server
-from wsgiserver.response import static_files_response, Http404Response
-from wsgiserver.request import WSGIRequest
+from madliar.response import static_files_response, Http404Response
+from madliar.request import WSGIRequest
 from etc.config import DEBUG, STATICS_URL_MAP, CUSTEM_MIDDLEWARE
 from application.urls import url as user_url_map
 

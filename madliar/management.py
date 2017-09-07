@@ -41,7 +41,7 @@ class ManagementUtility(object):
                 host, port = "0.0.0.0", 8080
 
             sys.stdout.write("run as simple wsgi server on %s:%s.\n" % (host, port))
-            from wsgiserver.core import wsgi_server
+            from madliar.core import wsgi_server
             wsgi_server(host, port).serve_forever()
 
         else:

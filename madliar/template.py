@@ -2,7 +2,7 @@
 This is a tiny template system, authored by mozillazg (@https://github.com/mozillazg).
 
 Sample code:
->>> from wsgiserver.template import Template
+>>> from madliar.template import Template
 
 >>> template = Template('<html>{% if test %}<h1>{{ varvalue }}</h1>{% endif %}</html>')
 >>> print template.render({'test': True, 'varvalue': 'Hello'})
@@ -12,7 +12,7 @@ Sample code:
 
 import os
 import re
-from wsgiserver.response import HttpResponse
+from madliar.response import HttpResponse
 
 try:
     from jinja2 import Template

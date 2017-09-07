@@ -3,7 +3,7 @@ The public interface to WSGI support. It returns a WSGI callable.
 
 """
 
-from wsgiserver.core import get_application
+from madliar.core import get_application
 
 
 application = get_application()

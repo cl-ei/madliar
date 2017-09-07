@@ -1,7 +1,7 @@
 import cgi
 import re
 
-from wsgiserver.utils import cached_property
+from madliar.utils import cached_property
 
 __all__ = ("WSGIRequest", )
 
