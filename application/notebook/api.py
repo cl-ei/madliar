@@ -2,7 +2,7 @@
 import json
 import re
 import os
-from wsgiserver.http import HttpResponse
+from wsgiserver.response import HttpResponse
 from application.notebook import dao
 from etc.config import APP_NOTE_BOOK_CONFIG
 

@@ -12,6 +12,7 @@ __all__ = (
     "REDIS_CONFIG",
     "APP_NOTE_BOOK_CONFIG",
     "EMAIL_CONFIG",
+    "CUSTEM_MIDDLEWARE",
 )
 
 if os.name in ("nt", ):
@@ -47,3 +48,5 @@ EMAIL_CONFIG = {
     "mail_pass": '000000',
     "sender": 'i@caoliang.net',
 }
+
+CUSTEM_MIDDLEWARE = ()

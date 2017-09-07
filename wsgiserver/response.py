@@ -69,6 +69,14 @@ class Http404Response(BaseResponse):
         self.reason_phrase = "Not Found"
 
 
+class Http410Response(BaseResponse):
+    def __init__(self, *args, **kwargs):
+        BaseResponse.__init__(self, *args, **kwargs)
+        self.content = "<center><h3>410 Gone!</h3></center>"
+        self.status_code = 410
+        self.reason_phrase = "Gone"
+
+
 class StreamingHttpResponse(BaseResponse):
     def _set_streaming_content(self, value):
         return self, value
@@ -88,11 +96,9 @@ class HttpResponseRedirectBase(HttpResponse):
     allowed_schemes = ['http', 'https', 'ftp']
 
     def __init__(self, redirect_to, *args, **kwargs):
-        super(HttpResponseRedirectBase, self).__init__(*args, **kwargs)
-        self['Location'] = iri_to_uri(redirect_to)
-        parsed = urlparse(force_text(redirect_to))
-        if parsed.scheme and parsed.scheme not in self.allowed_schemes:
-            raise DisallowedRedirect("Unsafe redirect to URL with protocol '%s'" % parsed.scheme)
+        super(HttpResponse, self).__init__()
+        self._content_type_for_repr = ""
+        self._redirect_to = redirect_to
 
     url = property(lambda self: self['Location'])
 

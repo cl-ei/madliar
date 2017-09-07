@@ -4,6 +4,8 @@ Memcache API.
 Provides memcached-alike API to application developers to store
 data in memory when reliable storage via the DataStore API isn't
 required and higher performance is desired.
+
+It's based on redis service.
 """
 
 import redis

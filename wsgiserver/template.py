@@ -13,14 +13,16 @@ Sample code:
 import os
 import re
 
-from wsgiserver.http import HttpResponse
-
 try:
     from jinja2 import Template
 except ImportError:
-    print "Cannot import jinja2"
+
+    from lib.log4 import logger as logging
+    from wsgiserver.response import HttpResponse
+
     __author__ = "mozillazg"
 
+    logging.critical("MadLiar Server: jinja2 template plugin is not installed.")
 
     class CodeBuilder:
         INDENT_STEP = 4

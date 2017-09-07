@@ -1,5 +1,5 @@
-from .views import handler
-from .api import handler as api_handler
+from application.notebook.views import handler
+from application.notebook.api import handler as api_handler
 
 
 url = {
