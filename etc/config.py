@@ -50,5 +50,5 @@ EMAIL_CONFIG = {
 }
 
 CUSTOM_MIDDLEWARE = (
-    "wsgiserver.middleware.BaseMiddleware",
+    "madliar.middleware.BaseMiddleware",
 )
