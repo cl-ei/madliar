@@ -12,13 +12,14 @@ Sample code:
 
 import os
 import re
-from madliar.response import HttpResponse
+
+from http.response import HttpResponse
 
 try:
     from jinja2 import Template
 except ImportError:
 
-    from lib.log4 import logger as logging
+    from madliar.config.log4 import logger as logging
 
     __author__ = "mozillazg"
 
