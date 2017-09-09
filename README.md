@@ -21,7 +21,7 @@ is base on this framework.
 
 Just run ```madliar-manage runserver localhost:8080```, and you will see "It works !" if you visit http://localhost:8080.
 
-Now create a web project, run `madliar-manage create_proj [your project name]` command then it will auto-generate some code that establishes a web project. Two folders will be created, one named `management` is used to collection of settings and anothor folder named `application`  you can put your business code in it.
+Now create a web project, run `madliar-manage create_proj [your project name]` command and some code that establishes a web project will be auto-generated. Two folders will be created, one named `management` is used to collection of settings and anothor folder named `application`  you can put your business code in it.
 
 For example, run the following command to build a "Hello world !" website:
 ```
