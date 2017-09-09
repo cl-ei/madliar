@@ -2,8 +2,8 @@
 Base middleware
 
 """
-from madliar.http.response import HttpResponse, Http500Response
 from madliar.config import settings
+from madliar.http.response import HttpResponse, Http500Response
 from madliar.exceptions import NoInstalledApplicationError
 
 
@@ -16,19 +16,20 @@ class BaseMiddleware(object):
         try:
             response = self.get_response(request)
         except NoInstalledApplicationError:
-            if settings.DEBUG:
-                response = HttpResponse(
-                    "<center><h3>It works!</h3></center>"
-                )
-            else:
-                response = Http500Response()
+            response = HttpResponse(
+                "<center><h3>It works!</h3><p>You must install at least one app in your project.</p></center>"
+            )
 
         except Exception as e:
             if settings.DEBUG:
                 response = HttpResponse(
-                    "<center><h3>An error happend: %s</h3></center>" % e
+                    "<center><h3>An error happend !</h3><p>Error: %s</p></center>" % e
                 )
             else:
                 response = Http500Response()
+
+            if settings.ENABLE_MADLIAR_LOG:
+                from madliar.config.log4 import logger as logging
+                logging.error("An error caused internal server error: %s" % e)
 
         return response

@@ -1,4 +1,3 @@
-import os
 import re
 from importlib import import_module
 from wsgiref.simple_server import make_server
@@ -66,26 +65,22 @@ class WSGIHandler(BaseHandler):
                 get_response_func = cls(get_response_func).__call__
         return get_response_func
 
+    @cached_property
     def url_map(self):
-        if self.__class__.__url_map is not None:
-            return self.__class__.__url_map
-
-        app_path = os.path.join(os.getcwd(), "application")
         try:
-            application = import_module(app_path)
+            application = import_module("application.urls")
         except ImportError:
             raise madliar_except.NoInstalledApplicationError("You must installed a app.")
 
         try:
-            url_map = getattr(application, "urls").get("url_map")
+            url_map = getattr(application, "url")
         except AttributeError:
             raise madliar_except.ProjectFolderStructureError("Bad poject folder struct.")
 
-        self.__class__.__url_map = url_map
         return url_map
 
     def route_distributing(self, request):
-        search_loop = self.url_map().items()
+        search_loop = self.url_map.items()
         route_path = request.route_path
         while True:
             try:

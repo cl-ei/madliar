@@ -87,7 +87,7 @@ def create_proj(*args):
             default_user_config
         )
         project_folder = os.path.join(os.getcwd(), project_name)
-        applicaton_folder = os.path.join(project_folder, "applicaton")
+        applicaton_folder = os.path.join(project_folder, "application")
         management_folder = os.path.join(project_folder, "management")
 
         os.mkdir(project_folder)
@@ -109,9 +109,9 @@ def create_proj(*args):
         with open(os.path.join(management_folder, "config.py"), "ab") as f:
             f.write(default_user_config)
 
-        sys.stdout.write("Application %s create completed." % project_name)
+        sys.stdout.write("Application %s created! " % project_name)
     except Exception as e:
-        sys.stderr.write("An error happend: %s" % e)
+        sys.stderr.write("Application %s not create: %s" % (project_name, e))
         return 0
 
 
@@ -132,6 +132,7 @@ class ManagementUtility(object):
         Given the command-line arguments, this figures out which subcommand is
         being run, and runs it.
         """
+        __import__("madliar.config")
         if len(self.argv) < 2:
             help()
             return 0

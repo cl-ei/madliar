@@ -4,21 +4,21 @@ Script to build up madliar site-packages.
 
 """
 
+from . import madliar
+
 setup(
     name='madliar',
     author='caoliang',
     url='https://github.com/cl-ei',
     author_email='i@caoliang.net',
-    version='0.1a1.dev1023',
+    version=madliar.__version__,
     description='A tiny WSGI freamwork.',
     license='MIT',
-    packages=find_packages(),
+    packages=madliar,
     include_package_data=False,
     zip_safe=True,
 
-    # There are some problems of encoding errors to solve
-    # with the built-in template, so this WSIG freamwork
-    # is using jinja2 template plugin.
+    # Install jinja2 for higher performance and security.
     # install_requires=['jinja2'],
 
     entry_points={

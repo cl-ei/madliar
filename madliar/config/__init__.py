@@ -5,7 +5,7 @@ Settings and configuration for madliar.
 
 import os
 import sys
-from madliar.exceptions import ProjectFolderStructureError
+from madliar import exceptions as mad_exceptions
 
 
 class SettingsBuilder(type):
@@ -15,25 +15,54 @@ class SettingsBuilder(type):
             sys.path.append(os.getcwd())
             management = __import__("management.config")
             user_settings = getattr(management, "config")
+
+            slots_dict = {
+                slot: getattr(user_settings, slot)
+                for slot in dir(user_settings) if not slot.startswith("__")
+            }
+
         except AttributeError:
             sys.stderr.write("Cannot read user's custom settings.")
-            raise ProjectFolderStructureError(
+            raise mad_exceptions.ProjectFolderStructureError(
                 "This error occured because the project folder is not " 
                 "in accordance with the rules of madliar, see the detail "
                 "at `README.rst`."
             )
-
         except ImportError:
-            from madliar.config import default_settings as user_settings
+            slots_dict = {
+                "DEBUG": True,
+            }
 
-        namespace["__slots__"] = [_ for _ in dir(user_settings) if not _.startswith("__")]
+        # overwrite project default settings
+        slots_dict["PROJECT_CWD"] = os.path.abspath(".")
+
+        installed_middle_ware = ["madliar.http.middleware.BaseMiddleware"]
+        installed_middle_ware.extend(slots_dict.get("INSTALLED_MIDDLEWARE", []))
+        slots_dict["INSTALLED_MIDDLEWARE"] = installed_middle_ware
+
+        if "ENABLE_MADLIAR_LOG" not in slots_dict:
+            slots_dict["ENABLE_MADLIAR_LOG"] = True
+
+        if "MADLIAR_LOG_PATH" not in slots_dict:
+            slots_dict["MADLIAR_LOG_PATH"] = slots_dict["PROJECT_CWD"]
+
+        namespace["__slots__"] = slots_dict.keys()
 
         def __init__(self):
-            for slot in namespace["__slots__"]:
-                setattr(self, slot, getattr(user_settings, slot))
+            for k, v in slots_dict.iteritems():
+                setattr(self, k, v)
+
+            def __setattr__(s, key, value):
+                raise mad_exceptions.DefaultSettingsWriteError(
+                    "Cannot set {%s: %s}, madliar default settings cannot be overwrite."
+                    % (key, value)
+                )
+            self.__class__.__setattr__ = __setattr__
 
         namespace["__init__"] = __init__
-        return type.__new__(mcs, name, bases, namespace)
+        new_cls = type.__new__(mcs, name, bases, namespace)
+
+        return new_cls
 
 
 class SettingsLoader(object):

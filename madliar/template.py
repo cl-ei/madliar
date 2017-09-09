@@ -18,12 +18,16 @@ from http.response import HttpResponse
 try:
     from jinja2 import Template
 except ImportError:
-
-    from madliar.config.log4 import logger as logging
+    from madliar.config import settings
+    if settings.ENABLE_MADLIAR_LOG:
+        from madliar.config.log4 import logger as logging
+        logging.critical(
+            "Madliar server: jinja2 template plugin is not installed, "
+            "a default template plugin was used. you may need install jinja2 "
+            "latter for higher performance and security. "
+        )
 
     __author__ = "mozillazg"
-
-    logging.critical("MadLiar Server: jinja2 template plugin is not installed.")
 
     class CodeBuilder:
         INDENT_STEP = 4
@@ -224,7 +228,7 @@ def render(template, context=None, request=None):
         with open(template) as f:
             template_context = f.read()
     except IOError:
-        template_context = u"<center><h3>Template Does Not Existed!</h3></center>"
+        template_context = "<center><h3>Template Does Not Existed!</h3></center>"
 
     if not isinstance(template_context, unicode):
         template_context = template_context.decode("utf-8")

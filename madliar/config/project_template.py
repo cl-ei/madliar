@@ -3,17 +3,27 @@ replace_char = "\r\n" if os.name in ("nt", ) else "\n"
 
 # ---------------------------- README.rst ---------------------------------- #
 default_read_me_for_user = """
-MadLiar
+madliar
 
-  This is a tiny WSGI web application freamwork. 
+  This is a tiny WSGI web application freamwork. For more infomation refers to 
+https://github.com/cl-ei/madliar/blob/master/README.rst
+
+  Thanks for checking it out.
 
 """.replace("\n", replace_char)
 
 
 # ---------------------- application/urls.py ------------------------------- #
 default_user_url_map = """
+from madliar.http.response import HttpResponse
 
+# The `hello_world` function is just used to show you how to start an application,
+# you may need remove it and build your own url map latter.
+def hello_world(request):
+    return HttpResponse("Hello world !")
+    
 url = {
+    "/": hello_world,
 
 }
 """.replace("\n", replace_char)
@@ -52,23 +62,21 @@ madliar freamwork settings.
 
 \"""
 
-# --------------------------------------------------------------------------- #
-# For CORE
-# --------------------------------------------------------------------------- #
+# If set True, An internal static files distribution server will be started,
+# and more detail info will be provided when error occured.
 DEBUG = True
 
-# Enable the freamwork print log when running.
+# Enable the debug log output.
 ENABLE_MADLIAR_LOG = True
-MADLIAR_LOG_PATH = "C:\Program Files (x86)\python27\Lib\site-packages\madliar"
+MADLIAR_LOG_PATH = "./"
 
-# Enable built-in static respose server. It will ignored when DEBUG=False
+# Statics files response url. It will ignored when DEBUG=False
 STATICS_URL_MAP = {
-    "^/statics": "statics",
-    "^/static": "static",
+
 }
 
 # To load middleware.
 INSTALLED_MIDDLEWARE = (
-    "madliar.middleware.BaseMiddleware",
+
 )
 """.replace("\n", replace_char)
