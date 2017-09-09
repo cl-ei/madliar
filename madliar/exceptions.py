@@ -1,5 +1,5 @@
 """
-Global Django exception and warning classes.
+Global exception and warning classes.
 
 """
 
