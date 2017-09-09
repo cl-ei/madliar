@@ -2,8 +2,8 @@ import re
 from importlib import import_module
 from wsgiref.simple_server import make_server
 
-from http.request import WSGIRequest
 from madliar import exceptions as madliar_except
+from madliar.http.request import WSGIRequest
 from madliar.config import settings
 from madliar.http.response import static_files_response, Http404Response
 from madliar.utils import cached_property
