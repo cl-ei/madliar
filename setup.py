@@ -4,7 +4,7 @@ Script to build up madliar site-packages.
 
 """
 
-from . import madliar
+import madliar
 
 setup(
     name='madliar',
@@ -14,7 +14,7 @@ setup(
     version=madliar.__version__,
     description='A tiny WSGI freamwork.',
     license='MIT',
-    packages=madliar,
+    packages=find_packages(),
     include_package_data=False,
     zip_safe=True,
 
