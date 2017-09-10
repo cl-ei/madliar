@@ -17,6 +17,7 @@ https://github.com/cl-ei/madliar/blob/master/README.rst
 default_user_url_map = """
 from madliar.http.response import HttpResponse
 
+
 # The `hello_world` function is just used to show you how to start an application,
 # you may need remove it and build your own url map latter.
 def hello_world(request):

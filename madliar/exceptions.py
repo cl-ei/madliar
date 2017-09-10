@@ -30,3 +30,10 @@ class HTTPResponseWriteError(Exception):
     The exception used for syntax errors during parsing or rendering.
     """
     pass
+
+
+class CommandNameRepeatError(Exception):
+    """
+    The command name must be unique.
+    """
+    pass
