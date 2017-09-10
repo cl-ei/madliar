@@ -40,11 +40,14 @@ class SettingsBuilder(type):
         installed_middle_ware.extend(slots_dict.get("INSTALLED_MIDDLEWARE", []))
         slots_dict["INSTALLED_MIDDLEWARE"] = installed_middle_ware
 
-        if "ENABLE_MADLIAR_LOG" not in slots_dict:
-            slots_dict["ENABLE_MADLIAR_LOG"] = True
+        if "ENABLE_SYS_LOG" not in slots_dict:
+            slots_dict["ENABLE_SYS_LOG"] = True
 
-        if "MADLIAR_LOG_PATH" not in slots_dict:
-            slots_dict["MADLIAR_LOG_PATH"] = slots_dict["PROJECT_CWD"]
+        if "SYS_LOG_PATH" not in slots_dict:
+            slots_dict["SYS_LOG_PATH"] = slots_dict["PROJECT_CWD"]
+
+        if slots_dict["DEBUG"] and "STATICS_URL_MAP" not in slots_dict:
+            slots_dict["STATICS_URL_MAP"] = {}
 
         namespace["__slots__"] = slots_dict.keys()
 

@@ -57,8 +57,7 @@ application = get_application()
 
 
 # --------------------- management/config.py --------------------------------- #
-default_user_config = """
-\"""
+default_user_config = """\"""
 madliar freamwork settings.
 
 \"""
@@ -68,8 +67,8 @@ madliar freamwork settings.
 DEBUG = True
 
 # Enable the debug log output.
-ENABLE_MADLIAR_LOG = True
-MADLIAR_LOG_PATH = "./"
+ENABLE_SYS_LOG = True
+SYS_LOG_PATH = "./"
 
 # Statics files response url. It will ignored when DEBUG=False
 STATICS_URL_MAP = {

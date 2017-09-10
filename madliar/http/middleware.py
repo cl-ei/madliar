@@ -16,9 +16,18 @@ class BaseMiddleware(object):
         try:
             response = self.get_response(request)
         except NoInstalledApplicationError:
-            response = HttpResponse(
-                "<center><h3>It works!</h3><p>You must install at least one app in your project.</p></center>"
-            )
+            import madliar
+            if settings.PROJECT_CWD != madliar.__path__:
+                response = HttpResponse(
+                    "<center><h3>Error happend!</h3>"
+                    "<p>An error happend when madliar load the url map from "
+                    "`application.urls` module so that the server cannot work regularly. "
+                    "please check it or send an email to author.</p></center>"
+                )
+            else:
+                response = HttpResponse(
+                    "<center><h3>It works!</h3><p>You must install at least one app in your project.</p></center>"
+                )
 
         except Exception as e:
             if settings.DEBUG:
@@ -28,7 +37,7 @@ class BaseMiddleware(object):
             else:
                 response = Http500Response()
 
-            if settings.ENABLE_MADLIAR_LOG:
+            if settings.ENABLE_SYS_LOG:
                 from madliar.config.log4 import logger as logging
                 logging.error("An error caused internal server error: %s" % e)
 
