@@ -18,7 +18,7 @@ class SettingsBuilder(type):
 
             slots_dict = {
                 slot: getattr(user_settings, slot)
-                for slot in dir(user_settings) if not slot.startswith("__")
+                for slot in dir(user_settings) if not slot.startswith("_")
             }
 
         except AttributeError:
@@ -29,11 +29,12 @@ class SettingsBuilder(type):
                 "at `README.rst`."
             )
         except ImportError:
-            slots_dict = {
-                "DEBUG": True,
-            }
+            slots_dict = {}
 
         # overwrite project default settings
+        if "DEBUG" not in slots_dict:
+            slots_dict["DEBUG"] = False
+
         slots_dict["PROJECT_CWD"] = os.path.abspath(".")
 
         installed_middle_ware = ["madliar.http.middleware.BaseMiddleware"]
