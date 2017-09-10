@@ -13,8 +13,8 @@ is base on this framework.
 
 ## __Install__
 ```
-    pip install madliar
-    madliar-manage  # show help text.
+pip install madliar
+madliar-manage  # show help text.
 ```
 
 ## __Getting Started__
