@@ -9,6 +9,7 @@ is base on this framework.
 * request and response
 * template engine
 * wsgi server
+* custom command
 * custom middleware
 
 ## __Install__
