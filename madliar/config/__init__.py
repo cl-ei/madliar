@@ -33,7 +33,7 @@ class SettingsBuilder(type):
 
         # overwrite project default settings
         if "DEBUG" not in slots_dict:
-            slots_dict["DEBUG"] = False
+            slots_dict["DEBUG"] = True
 
         slots_dict["PROJECT_CWD"] = os.path.abspath(".")
 
