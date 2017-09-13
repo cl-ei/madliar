@@ -203,7 +203,7 @@ def static_files_response(request, static_file_path):
         return Http404Response()
 
     content_type = "application/octet-stream"
-    static_file_ext_name = os.path.splitext(static_file_path)[-1].lower()
+    static_file_ext_name = os.path.splitext(static_file_path)[-1].lower().lstrip(".")
     if static_file_path:
         for file_type, description in STATICS_FILE_MIME_TYPE:
             if static_file_ext_name in file_type:
