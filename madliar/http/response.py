@@ -1,11 +1,87 @@
 import re
+import os
 from wsgiref.headers import Headers
 
 STATICS_FILE_MIME_TYPE = (
-    (("png", "jpg", "jpeg", "gif"), "image", None),
-    (("js", "woff"), "application", ("javascript", "x-font-woff")),
-    (("css", ), "text", None),
-    (("mp3", "wav", ), "audio/mpeg", None),
+    ("xml",             "text/xml"),
+    ("css",             "text/css"),
+    ("html htm shtml", "text/html"),
+    ("txt",             "text/plain"),
+    ("mml",             "text/mathml"),
+    ("wml",             "text/vnd.wap.wml"),
+    ("htc",             "text/x-component"),
+    ("jad",             "text/vnd.sun.j2me.app-descriptor"),
+
+    ("png",             "image/png"),
+    ("gif",             "image/gif"),
+    ("jpeg jpg",        "image/jpeg"),
+    ("tif tiff",        "image/tiff"),
+    ("webp",            "image/webp"),
+    ("jng",             "image/x-jng"),
+    ("ico",             "image/x-icon"),
+    ("svg svgz",        "image/svg+xml"),
+    ("bmp",             "image/x-ms-bmp"),
+    ("wbmp",            "image/vnd.wap.wbmp"),
+
+    ("mp4",             "video/mp4"),
+    ("ts",              "video/mp2t"),
+    ("mpeg mpg",        "video/mpeg"),
+    ("3gpp 3gp",        "video/3gpp"),
+    ("webm",            "video/webm"),
+    ("mng",             "video/x-mng"),
+    ("m4v",             "video/x-m4v"),
+    ("flv",             "video/x-flv"),
+    ("wmv",             "video/x-ms-wmv"),
+    ("asx asf",         "video/x-ms-asf"),
+    ("avi",             "video/x-msvideo"),
+    ("mov",             "video/quicktime"),
+
+    ("ogg",             "audio/ogg"),
+    ("mp3",             "audio/mpeg"),
+    ("mid midi kar",    "audio/midi"),
+    ("m4a",             "audio/x-m4a"),
+    ("ra",              "audio/x-realaudio"),
+
+    ("js",              "application/javascript"),
+    ("run",             "application/x-makeself"),
+    ("xls",             "application/vnd.ms-excel"),
+    ("jardiff",         "application/x-java-archive-diff"),
+    ("rar",             "application/x-rar-compressed"),
+    ("xpi",             "application/x-xpinstall"),
+    ("sea",             "application/x-sea"),
+    ("hqx",             "application/mac-binhex40"),
+    ("sit",             "application/x-stuffit"),
+    ("rtf",             "application/rtf"),
+    ("kml",             "application/vnd.google-earth.kml+xml"),
+    ("xhtml",           "application/xhtml+xml"),
+    ("jnlp",            "application/x-java-jnlp-file"),
+    ("ppt",             "application/vnd.ms-powerpoint"),
+    ("atom",            "application/atom+xml"),
+    ("m3u8",            "application/vnd.apple.mpegurl"),
+    ("rss",             "application/rss+xml"),
+    ("cco",             "application/x-cocoa"),
+    ("jar war ear",     "application/java-archive"),
+    ("tcl tk",          "application/x-tcl"),
+    ("prc pdb",         "application/x-pilot"),
+    ("woff",            "application/font-woff"),
+    ("zip",             "application/zip"),
+    ("doc",             "application/msword"),
+    ("eot",             "application/vnd.ms-fontobject"),
+    ("kmz",             "application/vnd.google-earth.kmz"),
+    ("ps eps ai",       "application/postscript"),
+    ("json",            "application/json"),
+    ("pdf",             "application/pdf"),
+    ("pl pm",           "application/x-perl"),
+    ("7z",              "application/x-7z-compressed"),
+    ("der pem crt",     "application/x-x509-ca-cert"),
+    ("xspf",            "application/xspf+xml"),
+    ("swf",             "application/x-shockwave-flash"),
+    ("wmlc",            "application/vnd.wap.wmlc"),
+    ("rpm",             "application/x-redhat-package-manager"),
+    ("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+    ("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+    ("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"),
+    ("bin exe dll deb dmg iso img msi msp msm", "application/octet-stream"),
 )
 
 
@@ -119,28 +195,19 @@ class HttpResponseRedirectBase(HttpResponse):
         }
 
 
-def static_files_response(request, static_path):
-    static_file_path = static_path + request.route_path
+def static_files_response(request, static_file_path):
     try:
         with open(static_file_path, "rb") as f:
             content = f.read()
     except IOError:
         return Http404Response()
 
-    try:
-        static_file_ext_name = re.match(r".*\.(.*)", static_file_path).groups()[0].lower()
-    except AttributeError:
-        return Http404Response()
-
-    for static_file_typedef in STATICS_FILE_MIME_TYPE:
-        ext_name_group, mime_type, mime_desc = static_file_typedef
-        if static_file_ext_name in ext_name_group:
-            content_type = "%s/%s" % (
-                mime_type,
-                mime_desc[ext_name_group.index(static_file_ext_name)] if mime_desc else static_file_ext_name
-            )
-            break
-    else:
-        content_type = None
+    content_type = "application/octet-stream"
+    static_file_ext_name = os.path.splitext(static_file_path)[-1].lower()
+    if static_file_path:
+        for file_type, description in STATICS_FILE_MIME_TYPE:
+            if static_file_ext_name in file_type:
+                content_type = description
+                break
 
     return HttpResponse(content, content_type=content_type)

@@ -1,4 +1,5 @@
 import re
+import os
 from importlib import import_module
 from wsgiref.simple_server import make_server
 
@@ -98,11 +99,13 @@ class WSGIHandler(BaseHandler):
 
         # Not hit
         if settings.DEBUG:
-            for url, static_path in settings.STATICS_URL_MAP.items():
-                m = re.match(url, request.path_info)
+            request_url = request.path_info
+            for static_url, static_path in settings.STATICS_URL_MAP.items():
+                m = re.match(static_url, request_url)
                 if m:
-                    request.route_path = request.path_info[len(m.group()):] or "/"
-                    return static_files_response(request, static_path)
+                    matched_statics_path = request_url[len(m.group()):].lstrip("/")
+                    static_file_path = os.path.join(static_path, matched_statics_path)
+                    return static_files_response(request, static_file_path)
 
         return Http404Response()
 
