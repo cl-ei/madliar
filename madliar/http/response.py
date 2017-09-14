@@ -5,7 +5,7 @@ from wsgiref.headers import Headers
 STATICS_FILE_MIME_TYPE = (
     ("xml",             "text/xml"),
     ("css",             "text/css"),
-    ("html htm shtml", "text/html"),
+    ("html htm shtml",  "text/html"),
     ("txt",             "text/plain"),
     ("mml",             "text/mathml"),
     ("wml",             "text/vnd.wap.wml"),
