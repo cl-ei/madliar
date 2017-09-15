@@ -20,7 +20,7 @@ try:
 except ImportError:
     from madliar.config import settings
     if settings.ENABLE_SYS_LOG:
-        from madliar.config.log4 import logger as logging
+        from madliar.config.log4 import logging
         logging.critical(
             "Madliar server: jinja2 template plugin is not installed, "
             "a default template plugin was used. you may need install jinja2 "

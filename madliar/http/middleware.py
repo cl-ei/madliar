@@ -38,7 +38,10 @@ class BaseMiddleware(object):
                 response = Http500Response()
 
             if settings.ENABLE_SYS_LOG:
-                from madliar.config.log4 import logger as logging
-                logging.error("An error caused internal server error: %s" % e)
+                from madliar.config.log4 import logging
+                from madliar.utils import get_traceback
+
+                traceback = get_traceback()
+                logging.error("An error caused internal server error: %s, traceback: %s" % (e, traceback))
 
         return response
