@@ -89,6 +89,9 @@ class WSGIHandler(BaseHandler):
             except IndexError:
                 break
 
+            if callable(sub_url_map) and url[-1] != "$":
+                url += "$"
+
             m = re.match(url, route_path)
             if m:
                 if callable(sub_url_map):

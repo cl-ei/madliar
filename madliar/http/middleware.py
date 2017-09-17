@@ -42,6 +42,6 @@ class BaseMiddleware(object):
                 from madliar.utils import get_traceback
 
                 traceback = get_traceback()
-                logging.error("An error caused internal server error: %s, traceback: %s" % (e, traceback))
+                logging.error("An error caused internal server error: %s, \n%s" % (e, traceback))
 
         return response

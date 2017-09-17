@@ -22,7 +22,8 @@ from madliar.http.response import HttpResponse
 # you may need remove it and build your own url map latter.
 def hello_world(request):
     return HttpResponse("Hello world !")
-    
+
+
 url = {
     "/": hello_world,
 

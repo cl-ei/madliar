@@ -154,6 +154,16 @@ class ManagementUtility(object):
                 custom_command += "".join(
                     ["\n" + " "*12 + line.lstrip(" ") for line in doc_lines]
                 )
+
+        if not custom_command:
+            custom_command = "".join([
+                "\n        Not found custom command.\n",
+                "\n        You can write functions that receive system",
+                "\n        arguments and process your own buessess logic,",
+                "\n        and put it to `command` directory under your",
+                "\n        `application` directory.\n"
+            ])
+
         full_help_text = main_help_text % custom_command
         sys.stdout.write(full_help_text)
 
