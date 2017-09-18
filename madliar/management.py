@@ -1,6 +1,8 @@
 import os
 import sys
 
+from random import randint
+
 from setuptools import find_packages
 from importlib import import_module
 from madliar.config import settings
@@ -37,14 +39,19 @@ main_help_text = """
  -------------------------------------------------------------------------
 """
 
+__madliar_command_attr_key = "__madliar_command_%0x___" % randint(0, 0xFFFFFFFF)
+
 
 def reg_command(f):
-    setattr(f, "__madliar_command__", True)
+    setattr(f, __madliar_command_attr_key, True)
     return f
 
 
 def _is_command(f):
-    return hasattr(f, "__madliar_command__") and getattr(f, "__madliar_command__") is True
+    return (
+        hasattr(f, __madliar_command_attr_key)
+        and getattr(f, __madliar_command_attr_key) is True
+    )
 
 
 class built_in_command(object):
@@ -147,13 +154,14 @@ class ManagementUtility(object):
 
     def show_help_text(self):
         custom_command = ""
-        for command, target_fucntion in self.custom_command.iteritems():
+        for command, target_fucntion in self.load_custom_command().iteritems():
             custom_command += "\n" + " "*8 + command
             if target_fucntion.__doc__:
                 doc_lines = target_fucntion.__doc__.splitlines()
-                custom_command += "".join(
+                command_doc = "".join(
                     ["\n" + " "*12 + line.lstrip(" ") for line in doc_lines]
-                )
+                ).rstrip(" \n")
+                custom_command += command_doc + "\n"
 
         if not custom_command:
             custom_command = "".join([
@@ -169,10 +177,19 @@ class ManagementUtility(object):
 
         return 0
 
-    @cached_property
-    def custom_command(self):
+    @staticmethod
+    def load_custom_command():
+        from madliar.utils import find_all_package
+
+        application_path = "application"
+        if not os.path.exists(application_path):
+            return {}
+
+        all_package = find_all_package(application_path)
         commands = {}
-        for package in find_packages(settings.PROJECT_CWD):
+
+        # TODO: add eggs check.
+        for package in all_package:
             m = import_module(package)
             public_attrs = [attr for attr in dir(m) if not attr.startswith("__")]
 
@@ -189,17 +206,19 @@ class ManagementUtility(object):
     def _execute_custom_command(self, *args):
         target, t_args,  = args[0], args[1:]
 
-        target_function = self.custom_command.get(target)
-        if callable(target_function):
-            try:
-                return target_function(*t_args)
-            except Exception as e:
-                sys.stderr.write(
-                    "An error happend when excute command `%s`:\n    %s"
-                    % (target, e)
-                )
-        else:
+        custom_command = self.load_custom_command()
+        target_function = custom_command.get(target)
+        if not callable(target_function):
             sys.stderr.write("Unknow command: %s, try typing `help` ?" % target)
+            return 0
+
+        try:
+            return target_function(*t_args)
+        except Exception as e:
+            sys.stderr.write(
+                "An error happend when excute command `%s`:\n    %s"
+                % (target, e)
+            )
         return 0
 
     def execute(self):

@@ -2,6 +2,8 @@
 Tools for working with functions and callable objects.
 
 """
+import os
+
 import StringIO
 import traceback
 
@@ -32,3 +34,19 @@ def get_traceback():
     except_content = str(except_trace.getvalue())
     except_trace.close()
     return except_content
+
+
+def find_all_package(path):
+    from setuptools import findall
+
+    path_split_char = "\\" if os.name in ("nt",) else "/"
+    all_packages_file = []
+
+    for f in findall(path):
+        f_path, f_ex = os.path.splitext(f)
+        if f_ex in (".py", ".pyc"):
+            module_name = f_path.replace(path_split_char, ".")
+            if module_name not in all_packages_file:
+                all_packages_file.append(module_name)
+
+    return all_packages_file
