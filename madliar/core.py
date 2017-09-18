@@ -38,7 +38,6 @@ class BaseHandler(object):
 
 class WSGIHandler(BaseHandler):
     request_class = WSGIRequest
-    __url_map = None
 
     def __init__(self, *args, **kwargs):
         super(WSGIHandler, self).__init__(*args, **kwargs)

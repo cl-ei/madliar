@@ -152,19 +152,22 @@ class ManagementUtility(object):
             custom_command += "\n" + " "*8 + command
             if target_fucntion.__doc__:
                 doc_lines = target_fucntion.__doc__.splitlines()
-                command_doc = "".join(
-                    ["\n" + " "*12 + line.lstrip(" ") for line in doc_lines]
-                ).rstrip(" \n")
+                if doc_lines:
+                    command_doc = "".join(
+                        ["\n" + " "*12 + line.lstrip(" ") for line in doc_lines]
+                    ).rstrip(" \n")
+                else:
+                    command_doc = "\n            No description."
                 custom_command += command_doc + "\n"
 
         if not custom_command:
-            custom_command = "".join([
-                "\n        Not found custom command.\n",
-                "\n        You can write functions that receive system",
-                "\n        arguments and process your own buessess logic,",
-                "\n        and put it to `command` directory under your",
+            custom_command = (
+                "\n        Not found custom command.\n"
+                "\n        You can write functions that receive system"
+                "\n        arguments and process your own buessess logic,"
+                "\n        and put it to `command` directory under your"
                 "\n        `application` directory.\n"
-            ])
+            )
 
         full_help_text = main_help_text % custom_command
         sys.stdout.write(full_help_text)
