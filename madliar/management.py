@@ -2,12 +2,8 @@ import os
 import sys
 
 from random import randint
-
-from setuptools import find_packages
 from importlib import import_module
-from madliar.config import settings
-from madliar import exceptions as madliar_except
-from madliar.utils import cached_property
+from madliar.utils import get_traceback
 
 
 __all__ = (
@@ -42,16 +38,15 @@ main_help_text = """
 __madliar_command_attr_key = "__madliar_command_%0x___" % randint(0, 0xFFFFFFFF)
 
 
-def reg_command(f):
-    setattr(f, __madliar_command_attr_key, True)
-    return f
+def reg_command(name):
+    def wrap(f):
+        setattr(f, __madliar_command_attr_key, name)
+        return f
+    return wrap
 
 
-def _is_command(f):
-    return (
-        hasattr(f, __madliar_command_attr_key)
-        and getattr(f, __madliar_command_attr_key) is True
-    )
+def _get_command_name(f):
+    return getattr(f, __madliar_command_attr_key, None)
 
 
 class built_in_command(object):
@@ -188,19 +183,38 @@ class ManagementUtility(object):
         all_package = find_all_package(application_path)
         commands = {}
 
-        # TODO: add eggs check.
         for package in all_package:
-            m = import_module(package)
-            public_attrs = [attr for attr in dir(m) if not attr.startswith("__")]
+            try:
+                m = import_module(package)
+            except Exception as e:
+                sys.stderr.write(
+                    "madliar. \n\n"
+                    "An error happend when load custom command: %s.\n%s"
+                    % (e, get_traceback())
+                )
+                sys.exit(0)
 
+            public_attrs = [attr for attr in dir(m) if not attr.startswith("_")]
             for attr in public_attrs:
-                command = getattr(m, attr)
-                if _is_command(command):
-                    if command in commands:
-                        raise madliar_except.CommandNameRepeatError(
-                            "A unique command name is required."
-                        )
-                    commands[command.__name__] = command
+                command_func = getattr(m, attr)
+                if not callable(command_func):
+                    continue
+
+                command_name = _get_command_name(command_func)
+                if not command_name:
+                    continue
+
+                if command_name in commands:
+                    sys.stderr.write(
+                        "madliar. \n\n"
+                        "Found duplicate command name: \"%s\" in `%s`, "
+                        "a unique name is required, please check it."
+                        % (command_name, package)
+                    )
+                    sys.exit(0)
+
+                commands[command_name] = command_func
+
         return commands
 
     def _execute_custom_command(self, *args):
