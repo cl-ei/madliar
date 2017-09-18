@@ -8,7 +8,6 @@ from madliar.utils import get_traceback
 
 __all__ = (
     "reg_command",
-    "ManagementUtility",
     "execute_from_command_line",
 )
 
@@ -176,6 +175,7 @@ class ManagementUtility(object):
     def load_custom_command():
         from madliar.utils import find_all_package
 
+        sys.path.append(".")
         application_path = "application"
         if not os.path.exists(application_path):
             return {}
