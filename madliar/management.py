@@ -13,7 +13,7 @@ __all__ = (
 
 main_help_text = """
  -------------------------------------------------------------------------
-    MadLiar.
+    madLiar.
 
     Usage:
         madliar-manage <command> [options]
@@ -74,8 +74,9 @@ def runserver(*args):
         host, port = args[0].split(":")
         port = int(port)
     except (IndexError, TypeError, ValueError) as e:
-        error_msg = "An error happend: %s, use default configured.\n" % str(e)
-        sys.stdout.write(error_msg)
+        sys.stdout.write(
+            "An error happend: %s, use default configured.\n" % str(e)
+        )
         host, port = "0.0.0.0", 8080
 
     sys.stdout.write("Run madliar wsgi server on %s:%s.\n" % (host, port))
@@ -191,7 +192,6 @@ class ManagementUtility(object):
                 m = import_module(package)
             except Exception as e:
                 sys.stderr.write(
-                    "madliar. \n\n"
                     "An error happend when load custom command: %s.\n%s"
                     % (e, get_traceback())
                 )
@@ -209,7 +209,6 @@ class ManagementUtility(object):
 
                 if command_name in commands:
                     sys.stderr.write(
-                        "madliar. \n\n"
                         "Found duplicate command name: \"%s\" in `%s`, "
                         "a unique name is required, please check it."
                         % (command_name, package)
@@ -246,6 +245,7 @@ class ManagementUtility(object):
         if len(self.argv) < 2 or self.argv[1] == "help":
             return self.show_help_text()
 
+        sys.stdout.write("\nmadliar.\n\n")
         try:
             excute_resule = built_in_command.run(*self.argv[1:])
         except built_in_command.CommandDoesNotExisted:

@@ -1,5 +1,6 @@
 import re
 import os
+import sys
 from importlib import import_module
 from wsgiref.simple_server import make_server
 
@@ -7,7 +8,7 @@ from madliar import exceptions as madliar_except
 from madliar.http.request import WSGIRequest
 from madliar.config import settings
 from madliar.http.response import static_files_response, Http404Response
-from madliar.utils import cached_property
+from madliar.utils import cached_property, get_traceback
 
 
 def dynamic_import_class(dotted_path):
@@ -60,7 +61,21 @@ class WSGIHandler(BaseHandler):
     def middleware_chain(self):
         get_response_func = self.route_distributing
         for class_path in settings.INSTALLED_MIDDLEWARE[::-1]:
-            cls = dynamic_import_class(class_path)
+            try:
+                cls = dynamic_import_class(class_path)
+            except Exception as e:
+                err_msg = (
+                    "An error happend when load custom middleware: %s, "
+                    "the application may not work properly.\n%s"
+                    % (e, get_traceback())
+                )
+                sys.stderr.write(err_msg)
+                if settings.ENABLE_SYS_LOG:
+                    from madliar.config.log4 import logging
+                    logging.critical(err_msg)
+
+                return get_response_func
+
             if callable(cls):
                 get_response_func = cls(get_response_func).__call__
         return get_response_func

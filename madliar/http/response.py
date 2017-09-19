@@ -87,6 +87,8 @@ STATICS_FILE_MIME_TYPE = (
 
 class BaseResponse(object):
     def __init__(self, *args, **kwargs):
+        # TODO: add param type checking.
+
         self.status_code = kwargs.get("status_code", 200)
         self.reason_phrase = kwargs.get("reason_phrase", "OK")
         self.cookies = []

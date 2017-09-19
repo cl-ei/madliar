@@ -38,7 +38,15 @@ class SettingsBuilder(type):
         slots_dict["PROJECT_CWD"] = os.path.abspath(".")
 
         installed_middle_ware = ["madliar.http.middleware.BaseMiddleware"]
-        installed_middle_ware.extend(slots_dict.get("INSTALLED_MIDDLEWARE", []))
+        custom_middleware = slots_dict.get("INSTALLED_MIDDLEWARE", [])
+        if not isinstance(custom_middleware, (list, tuple)):
+            sys.stderr.write(
+                "You must regist your middleware in INSTALLED_MIDDLEWARE tuple. not: \n%s"
+                % custom_middleware
+            )
+            sys.exit(0)
+
+        installed_middle_ware.extend(custom_middleware)
         slots_dict["INSTALLED_MIDDLEWARE"] = installed_middle_ware
 
         if "ENABLE_SYS_LOG" not in slots_dict:
