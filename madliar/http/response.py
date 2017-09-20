@@ -108,10 +108,9 @@ class BaseResponse(object):
         self._content = []
         self.__set_default_headers()
 
-        if not content_type:
-            content_type = "text/html"
+        content_type = "text/html" if not content_type else content_type.strip(" \r\n")
         if (
-            content_type.lstrip("/") in ("text", "application")
+            content_type.split("/", 1) in ("text", "application")
             and "charset" not in content_type.lower()
         ):
             content_type = "%s; charset=%s" % (content_type.rstrip("; \r\n"), self.charset)

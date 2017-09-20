@@ -12,4 +12,4 @@
     :copyright: (c) 2017 MIT License
 """
 
-__version__ = '0.1a1.dev1210'
+__version__ = '0.1a1.dev1211'
