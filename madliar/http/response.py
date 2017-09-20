@@ -1,6 +1,8 @@
 import re
 import os
 from wsgiref.headers import Headers
+from madliar import __version__
+
 
 STATICS_FILE_MIME_TYPE = (
     ("xml",             "text/xml"),
@@ -86,24 +88,35 @@ STATICS_FILE_MIME_TYPE = (
 
 
 class BaseResponse(object):
-    def __init__(self, *args, **kwargs):
-        # TODO: add param type checking.
+    def __init__(self, status_code=None, reason_phrase=None, content_type=None, charset=None):
+        try:
+            if not status_code:
+                status_code = 200
+                reason_phrase = "OK"
 
-        self.status_code = kwargs.get("status_code", 200)
-        self.reason_phrase = kwargs.get("reason_phrase", "OK")
+            self.status_code = int(status_code)
+            self.reason_phrase = reason_phrase
+
+        except (TypeError, ValueError):
+            # TODO: add traceback
+            self.status_code = 500
+            self.reason_phrase = "Internal Server Error"
+
         self.cookies = []
-        self.charset = kwargs.get("charset", "utf-8")
+        self.charset = charset or "utf-8"
         self._handler_class = None
         self._content = []
         self.__set_default_headers()
-        self.headers.add_header(
-            "Content-Type",
-            kwargs.get("content_type", "text/html; charset=%s" % self.charset)
-        )
+
+        if not content_type:
+            content_type = "text/html"
+        if "charset" not in content_type.lower():
+            content_type = "%s; %s" % (content_type.rstrip("; \r\n"), self.charset)
+        self.headers.add_header("Content-Type", content_type)
 
     def __set_default_headers(self):
         self.headers = Headers([
-            ("Server", "MadLiar"),
+            ("Server", "MadLiar/%s" % __version__),
             ("Access-Control-Allow-Origin", "*"),
             ("X-Frame-Options", "SAMEORIGIN"),
         ])
@@ -130,11 +143,10 @@ class BaseResponse(object):
 
 
 class HttpResponse(BaseResponse):
-    def __init__(self, *args, **kwargs):
-        BaseResponse.__init__(self, *args, **kwargs)
-        content = kwargs.get("content", args[0])
+    def __init__(self, content, *args, **kwargs):
+        super(HttpResponse, self).__init__(*args, **kwargs)
         if type(content) == unicode:
-            content = content.encode("utf-8")
+            content = content.encode(self.charset)
         if type(content) in (bytes, str):
             self.content = content
 
