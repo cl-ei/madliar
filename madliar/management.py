@@ -184,7 +184,7 @@ class ManagementUtility(object):
         if not os.path.exists(application_path):
             return {}
 
-        all_package = find_all_package(application_path)
+        all_package = find_all_package(".")
         commands = {}
 
         for package in all_package:
