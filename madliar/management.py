@@ -192,10 +192,11 @@ class ManagementUtility(object):
                 m = import_module(package)
             except Exception as e:
                 sys.stderr.write(
-                    "An error happend when load custom command: %s.\n%s"
+                    "\nAn error happend when load custom command: %s.\n%s"
+                    "\n\nNow ignore it, remanber to fix it.\n"
                     % (e, get_traceback())
                 )
-                sys.exit(0)
+                continue
 
             public_attrs = [attr for attr in dir(m) if not attr.startswith("_")]
             for attr in public_attrs:
