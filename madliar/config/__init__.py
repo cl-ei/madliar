@@ -58,6 +58,9 @@ class SettingsBuilder(type):
         if slots_dict["DEBUG"] and "STATICS_URL_MAP" not in slots_dict:
             slots_dict["STATICS_URL_MAP"] = {}
 
+        if "MAX_POST_SIZE" not in slots_dict:
+            slots_dict["MAX_POST_SIZE"] = 1024 * 1024 * 10
+
         namespace["__slots__"] = slots_dict.keys()
 
         def __init__(self):

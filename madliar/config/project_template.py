@@ -67,6 +67,9 @@ madliar freamwork settings.
 # and more detail info will be provided when error occured.
 DEBUG = True
 
+# Max post content length(Bytes), default is 10MB.
+MAX_POST_SIZE = 1024 * 1024 * 10
+
 # Enable the debug log output.
 ENABLE_SYS_LOG = True
 SYS_LOG_PATH = "./"
