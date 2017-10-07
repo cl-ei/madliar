@@ -67,10 +67,10 @@ class WSGIRequest(object):
         except ValueError:
             request_body_size = 0
 
-        if request_body_size > 1024 * 100:
+        if request_body_size > 1024 * 4096:  # 4MB
             raise ValueError("POST request body too long: %s Bytes." % request_body_size)
 
-        request_body = self.environ['wsgi.input'].read(request_body_size)
+        request_body = self.environ['wsgi.input'].read(request_body_size).replace("+", " ")
         post_qs = self.parse_query_string(request_body)
         return post_qs
 
