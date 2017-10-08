@@ -9,6 +9,86 @@ __all__ = ("WSGIRequest", )
 QUERY_STRING_PATTERN = re.compile(r"([^=]+)=(.*)")
 QUERY_STRING_SPLIT = re.compile('[&;]')
 MULTI_PART_FORM_PTRN = re.compile(r"([ a-zA-Z0-9_-]+)=\"(.*)\"")
+BOUNDARY_START_PTERN = re.compile(r"(-{2,100}[a-zA-Z0-9]+)")
+
+
+class MultipartDataParser(object):
+
+    def __init__(self, input_handler, content_length):
+        self.input_handler = input_handler
+        self.content_length = content_length
+
+        self._files, self._post = {}, {}
+        self.__loaded = False
+
+    def load_boundary(self, content):
+        find_range = content.strip("\r\n ").split("\r\n")
+        for line in find_range:
+            line = line.strip("\r\n")
+            m = BOUNDARY_START_PTERN.match(line)
+            if m:
+                return m.group(0).strip("\r\n ")
+        return None
+
+    def load_description(self, lines):
+        temp_qs = {}
+        for line in lines:
+            line = line.strip("\r\n ")
+            if not line:
+                continue
+
+            qs_pairs = line.split(";")
+            description_k, description = map(lambda x: x.strip(" "), qs_pairs[0].split(":"))
+            temp_qs[description_k] = description
+
+            for pair in qs_pairs[1:]:
+                m = MULTI_PART_FORM_PTRN.match(pair)
+                if m:
+                    k, v = m.groups()
+                    temp_qs[k.strip("\r\n ")] = v.strip("\r\n ")
+        return temp_qs
+
+    def load_all(self):
+        self.__loaded = True
+
+        content = self.input_handler.read(self.content_length)
+        boundary = self.load_boundary(content[:100])
+        if not boundary:
+            return
+
+        sections = content.split(boundary)
+        for sec in sections:
+            s = re.split("\r\n\r\n", sec, 1)
+            if len(s) != 2:
+                continue
+
+            sec_description, sec_content = s
+            temp_qs = self.load_description(sec_description.split("\r\n"))
+
+            name = temp_qs.get("name", "__")
+            if temp_qs.get("filename"):
+                content_type = temp_qs.get("Content-Type")
+                prefix = content_type.split("/")[0].strip("\r\n ")
+                if prefix in ("text", ):
+                    temp_qs["contents"] = sec_content.replace("\r\n", "\n")[:-1]
+                else:
+                    temp_qs["contents"] = sec_content[:-2] if sec_content.endswith("\r\n") else sec_content
+
+                self._files[name] = temp_qs
+            else:
+                self._post[name] = sec_content.replace("\r\n", "\n").rstrip("\n")
+
+    @property
+    def files(self):
+        if not self.__loaded:
+            self.load_all()
+        return self._files
+
+    @property
+    def post(self):
+        if not self.__loaded:
+            self.load_all()
+        return self._post
 
 
 class WSGIRequest(object):
@@ -60,91 +140,16 @@ class WSGIRequest(object):
         query = self.parse_query_string(raw_query_string)
         return query
 
-    def _parse_form_description(self, temp_qs, line):
-        qs_pairs = line.strip("\r\n ").split(";")
-        description_k, description = map(lambda x: x.strip(" "), qs_pairs[0].split(":"))
-        temp_qs[description_k] = description
-
-        for pair in qs_pairs[1:]:
-            m = MULTI_PART_FORM_PTRN.match(pair)
-            if m:
-                k, v = m.groups()
-                temp_qs[k.strip("\r\n ")] = v.strip("\r\n ")
-        return temp_qs
-
-    def _load_multipart_form_data(self):
-        self._post, self._files = {}, {}
-
-        input_handler = self.META["wsgi.input"]
-        content_length = min(
-            int(self.META.get("CONTENT_LENGTH", 0)),
-            settings.MAX_POST_SIZE
-        )
-
-        boundary = None
-        loaded_content_length = 0
-        currsor_position = "boundary"  # "boundary", "description", "content"
-        temp_qs = {}
-
-        while True:
-            c = input_handler.readline()
-            loaded_content_length += len(c)
-
-            if currsor_position == "boundary":
-                if boundary is None:
-                    if not c:
-                        continue
-
-                    m = re.match("(-{2,100}[a-zA-Z0-9]+)\r\n", c)
-                    if not m:
-                        continue
-                    else:
-                        boundary = m.group(0)
-                if c == boundary:
-                    currsor_position = "description"
-
-            elif currsor_position == "description":
-                if c == "\r\n":
-                    currsor_position = "content"
-                else:
-                    temp_qs = self._parse_form_description(temp_qs or {}, c)
-
-            elif currsor_position == "content":
-                finished_form = bool(c == boundary)
-                if finished_form:
-                    finished_all = False
-                else:
-                    finished_all = bool(c[:len(boundary)] == boundary.strip("\r\n") + "--")
-
-                if finished_form or finished_all:
-                    name = temp_qs.get("name")
-                    f_name = temp_qs.get("filename")
-                    if f_name:
-                        del temp_qs["name"]
-                        if temp_qs["chunk"][-1] == "\r\n":
-                            temp_qs["chunk"].pop()
-                        if temp_qs["chunk"][-1].endswith("\r\n"):
-                            temp_qs["chunk"][-1] = temp_qs["chunk"][-1][:-2]
-                        self._files[name] = temp_qs
-                    else:
-                        self._post[name] = "".join(temp_qs["chunk"])[:-2]
-
-                if finished_form:
-                    temp_qs = {}
-                    currsor_position = "description"
-                elif finished_all:
-                    return
-                else:
-                    if not isinstance(temp_qs.get("chunk"), list):
-                        temp_qs["chunk"] = []
-                    temp_qs["chunk"].append(c)
-
-            if loaded_content_length >= content_length:
-                break
-
     def _load_post_and_files(self):
         if self.content_type == "multipart/form-data":
-            self._load_multipart_form_data()
+            parser = MultipartDataParser(
+                input_handler=self.META["wsgi.input"],
+                content_length=min(
+                    int(self.META.get("CONTENT_LENGTH", 0)),
+                    settings.MAX_POST_SIZE
+                )
+            )
+            self._post, self._files = parser.post, parser.files
         else:
             try:
                 request_body_size = int(self.environ.get('CONTENT_LENGTH', 0))
