@@ -120,7 +120,6 @@ class BaseResponse(object):
     def __set_default_headers(self):
         self.headers = Headers([
             ("Server", "MadLiar/%s" % __version__),
-            ("Access-Control-Allow-Origin", "*"),
             ("X-Frame-Options", "SAMEORIGIN"),
         ])
 
